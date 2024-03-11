@@ -11,7 +11,11 @@ public class CharacterPrefapSO : ScriptableObject
     [SerializeField] private LocalizedString _characterName;
 
     public CharacterID CharacterID => _characterID;
-    public LocalizedString CharacterName => _characterName;
+    public LocalizedString CharacterName
+    {
+        get { return _characterName; }
+        set { _characterName = value; }
+    }
     public AssetReference CharacterPrefap
     {
         get { return _characterPrefap; }
