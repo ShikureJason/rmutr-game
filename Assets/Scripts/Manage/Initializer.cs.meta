@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c335ac8dc53f0fd44a8e8b213e3b48b4
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _mangeScene: {instanceID: 0}
+  - _loadNextScene: {instanceID: 0}
+  - _loadSceneEventEmitter: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
