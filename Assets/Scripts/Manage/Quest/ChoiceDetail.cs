@@ -4,8 +4,8 @@ using UnityEngine.Localization;
 public class ChoiceDetail : MonoBehaviour
 {
     [SerializeField] private LocalizedString _choiceText;
-    [SerializeField] private QuestSO _nextQuest;
+    [SerializeField] private QuestBaseSO _nextQuest;
 
     public LocalizedString ChoiceText => _choiceText;
-    public QuestSO NextQuest => _nextQuest;
+    public QuestBaseSO NextQuest => _nextQuest;
 }

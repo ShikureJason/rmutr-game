@@ -6,5 +6,5 @@ public enum QuestType
     Talk,
     FindItem,
     Npc,
-
+    FindLocation,
 }

@@ -4,27 +4,33 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
-    [SerializeField] private List<QuestList> _questCharacterList;
+    [SerializeField] private List<QuestBaseSO> _questList;
     [Header("Event Emitter")]
     [SerializeField] private DialogueEvent _sendDialogueEventEmitter;
 
     [Header("Event Listener")]
     [SerializeField] private InteractQuestEvent _interactQuestEventListener;
+    [SerializeField] private QuestEvent _questEventListener;
 
     [Header("Data")]
-    [SerializeField] private List<QuestSO> CurrentQuest;
-    private QuestSO _quest;
+    [SerializeField] private List<QuestBaseSO> _currentQuest;
+    private QuestBaseSO _quest;
 
     private void Awake()
     {
-
-
-
+        if(_currentQuest == null)
+        {
+            _currentQuest.Add(_questList.Find(e => e.FirstQuest == true));
+        }
     }
 
     private void characterGetQuest(String GUID, CharacterID id)
     {
-        _quest = _questCharacterList.Find(name => name.CharacterID == id).List.Find(id => id.GUID == GUID);
         //_sendDialogueEventEmitter.RaiseEvent();
+    }
+
+    private void questfindLocation()
+    {
+
     }
 }
