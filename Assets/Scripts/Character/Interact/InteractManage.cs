@@ -66,6 +66,10 @@ public class InteractManage : MonoBehaviour
                 newInteract.type = InteractType.None;
                 Destroy(obj);
                 break;
+            case "LocationPoint":
+                newInteract.type = InteractType.None;
+                newInteract.interactableObject.GetComponent<QuestFindLocationInterract>().QuestTrigger();
+                break;
             default:
                 newInteract.type = InteractType.None;
                 break;

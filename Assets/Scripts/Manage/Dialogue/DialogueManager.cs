@@ -4,9 +4,10 @@ public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private CharacterSO _character;
     [Header("Event Emitter")]
-    [SerializeField] private ShowDialogueEvent _showDialogueEmitter;
+    [SerializeField] private ShowDialogueEvent _showDialogueEventEmitter;
+    [SerializeField] private VoidEvent _endDialogueEventEmitter;
     [Header("Event Listener")]
-    [SerializeField] private GenericEvent<DialogueSO> _sendDialogueListener;
+    [SerializeField] private SendDialogueEvent _sendDialogueEventListener;
 
     private DialogueSO dialogue;
     private int currentLine = 0;
@@ -14,12 +15,12 @@ public class DialogueManager : MonoBehaviour
 
     private void OnEnable()
     {
-        _sendDialogueListener.OnEventRaised += getDialogueData;
+        _sendDialogueEventListener.OnEventRaised += getDialogueData;
     }
 
     private void OnDisable()
     {
-        _sendDialogueListener.OnEventRaised -= getDialogueData;
+        _sendDialogueEventListener.OnEventRaised -= getDialogueData;
     }
 
     private void getDialogueData(DialogueSO dialogue)
@@ -32,13 +33,22 @@ public class DialogueManager : MonoBehaviour
 
     private void nextDialogue()
     {
-        if (currentDialogue < dialogue.DialogueLine[currentLine].TextDialogue.Count) {
-            _showDialogueEmitter.RaiseEvent(dialogue.DialogueLine[currentLine].TextDialogue[currentDialogue], _character.CharacterDetail.Find(name => name.CharacterID == dialogue.DialogueLine[currentLine].CharacterID));
-            currentDialogue++;
-        }else if (currentLine < dialogue.DialogueLine.Count)
+        if (dialogue == null)
+            return;
+
+        if (currentDialogue < dialogue.DialogueLine[currentLine].TextDialogue.Count) 
         {
-            _showDialogueEmitter.RaiseEvent(dialogue.DialogueLine[currentLine].TextDialogue[currentDialogue], _character.CharacterDetail.Find(name => name.CharacterID == dialogue.DialogueLine[currentLine].CharacterID));
+            _showDialogueEventEmitter.RaiseEvent(dialogue.DialogueLine[currentLine].TextDialogue[currentDialogue], _character.CharacterDetail.Find(name => name.CharacterID == dialogue.DialogueLine[currentLine].CharacterID).CharacterName);                       
+            currentDialogue++;
+        }
+        else if (currentLine < dialogue.DialogueLine.Count)
+        {
+            _showDialogueEventEmitter.RaiseEvent(dialogue.DialogueLine[currentLine].TextDialogue[currentDialogue], _character.CharacterDetail.Find(name => name.CharacterID == dialogue.DialogueLine[currentLine].CharacterID).CharacterName);
             currentLine++;
+        }
+        else
+        {
+            _endDialogueEventEmitter.RaiseEvent();
         }
         
     }

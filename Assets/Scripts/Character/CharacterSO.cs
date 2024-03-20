@@ -4,8 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Actor", menuName = "Character/Create Actor")]
 public class CharacterSO : ScriptableObject
 {
-    [SerializeField] private List<CharacterDetail> _characterDetail;
+    [SerializeField] private List<CharacterPrefapSO> _characterDetail;
 
-    public List<CharacterDetail> CharacterDetail => _characterDetail;
+    public List<CharacterPrefapSO> CharacterDetail => _characterDetail;
 
 }

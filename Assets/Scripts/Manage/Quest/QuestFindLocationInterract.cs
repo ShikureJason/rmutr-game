@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class QuestFindLocationInterract : MonoBehaviour
 {
-    [SerializeField] private QuestFindLocationSO _questLocation;
+    [SerializeField] private QuestSO _questLocation;
 
     [Header("Event Emitter")]
-    [SerializeField] public QuestEvent _questEventEmitter;
+    [SerializeField] public StringEvent _questGUIDEventEmitter;
 
     public void QuestTrigger()
     {
-        _questEventEmitter.RaiseEvent(_questLocation);
+        _questGUIDEventEmitter.RaiseEvent(_questLocation.GUID);
     }
 }

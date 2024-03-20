@@ -1,5 +1,6 @@
 public enum CharacterID 
 {
-    P, //Player
+    None, // none
+    Player, //Player
     T //Test NPC
 }

@@ -1,39 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
     [SerializeField] private InventorySO _currentInventory = default;
+    [SerializeField] private SaveData _saveData = default;
 
     [Header("Listening on")]
-    [SerializeField] private ItemEvent _cookRecipeEvent = default;
-    [SerializeField] private ItemEvent _useItemEvent = default;
-    [SerializeField] private ItemEvent _equipItemEvent = default;
-    [SerializeField] private ItemEvent _rewardItemEvent = default;
-    [SerializeField] private ItemEvent _giveItemEvent = default;
-    [SerializeField] private ItemEvent _addItemEvent = default;
-    [SerializeField] private ItemEvent _removeItemEvent = default;
+    [SerializeField] private ItemEvent _useItemEventListener = default;
+    [SerializeField] private ItemEvent _equipItemEventListener = default;
+    [SerializeField] private ItemStackEvent _rewardItemEventListener = default;
+    [SerializeField] private ItemEvent _giveItemEventListener = default;
+    [SerializeField] private ItemEvent _addItemEventListener = default;
+    [SerializeField] private ItemEvent _removeItemEventListener = default;
 
     private void OnEnable()
     {
-        _useItemEvent.OnEventRaised += UseItemEventRaised;
-        _equipItemEvent.OnEventRaised += EquipItemEventRaised;
-        _addItemEvent.OnEventRaised += AddItem;
-        _removeItemEvent.OnEventRaised += RemoveItem;
-        //_rewardItemEvent.OnEventRaised += AddItemStack;
-        _giveItemEvent.OnEventRaised += RemoveItem;
+        _useItemEventListener.OnEventRaised += UseItemEventRaised;
+        _equipItemEventListener.OnEventRaised += EquipItemEventRaised;
+        _addItemEventListener.OnEventRaised += AddItem;
+        _removeItemEventListener.OnEventRaised += RemoveItem;
+        _rewardItemEventListener.OnEventRaised += AddItemStack;
+        _giveItemEventListener.OnEventRaised += RemoveItem;
     }
 
     private void OnDisable()
     {
-        _useItemEvent.OnEventRaised -= UseItemEventRaised;
-        _equipItemEvent.OnEventRaised -= EquipItemEventRaised;
-        _addItemEvent.OnEventRaised -= AddItem;
-        _removeItemEvent.OnEventRaised -= RemoveItem;
+        _useItemEventListener.OnEventRaised -= UseItemEventRaised;
+        _equipItemEventListener.OnEventRaised -= EquipItemEventRaised;
+        _addItemEventListener.OnEventRaised -= AddItem;
+        _removeItemEventListener.OnEventRaised -= RemoveItem;
     }
 
-    private void AddItemWithUIUpdate(Item item)
+    private void AddItemWithUIUpdate(ItemSO item)
     {
         _currentInventory.Add(item);
         if (_currentInventory.Contains(item))
@@ -42,7 +40,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    private void RemoveItemWithUIUpdate(Item item)
+    private void RemoveItemWithUIUpdate(ItemSO item)
     {
         ItemStack itemToUpdate = new ItemStack();
 
@@ -56,7 +54,7 @@ public class InventoryManager : MonoBehaviour
         bool removeItem = _currentInventory.Contains(item);
     }
 
-    private void AddItem(Item item)
+    private void AddItem(ItemSO item)
     {
         _currentInventory.Add(item);
        // _saveSystem.SaveDataToDisk();
@@ -68,19 +66,19 @@ public class InventoryManager : MonoBehaviour
        // _saveSystem.SaveDataToDisk();
     }
 
-    private void RemoveItem(Item item)
+    private void RemoveItem(ItemSO item)
     {
         _currentInventory.Remove(item);
         //_saveSystem.SaveDataToDisk();
     }
 
-    private void UseItemEventRaised(Item item)
+    private void UseItemEventRaised(ItemSO item)
     {
         RemoveItem(item);
     }
 
     //This empty function is left here for the possibility of adding decorative 3D items
-    private void EquipItemEventRaised(Item item)
+    private void EquipItemEventRaised(ItemSO item)
     {
 
     }

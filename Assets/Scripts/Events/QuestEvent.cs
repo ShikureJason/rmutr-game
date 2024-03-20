@@ -4,7 +4,7 @@ using UnityEngine.Events;
 [CreateAssetMenu(fileName = "ChioceEvent", menuName = "Events/Quest Event")]
 public class QuestEvent : ScriptableObject
 {
-    public UnityAction<QuestBaseSO> OnEventRaised;
+    public UnityAction<QuestSO> OnEventRaised;
 
-    public void RaiseEvent(QuestBaseSO data) => OnEventRaised?.Invoke(data);
+    public void RaiseEvent(QuestSO data) => OnEventRaised?.Invoke(data);
 }

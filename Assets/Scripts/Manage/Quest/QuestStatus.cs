@@ -1,6 +1,6 @@
 public enum QuestStatus
 {
-    Idel = 0,
+    NotStart = 0,
     Running = 1,
-    Stop= 2
+    Complete= 2
 }

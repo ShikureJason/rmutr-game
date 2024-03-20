@@ -5,7 +5,7 @@ public class NonCharacter : MonoBehaviour
     [SerializeField] private CharacterID _characterID;
 
     [Header("Event Emitter")]
-    [SerializeField] private InteractQuestEvent _interactQuestEventEmitter;
+    [SerializeField] private CharacterEvent _interactQuestEventEmitter;
 
     public void Interact()
     {

@@ -9,15 +9,15 @@ public class QuestBaseSO : ScriptableObject
     [SerializeField] private RewardItemSO _rewardItem;
     [SerializeField] private QuestStatus _questStatus;
     [SerializeField] private QuestType _questType;
-    [SerializeField] private QuestSO _condition;
-    [SerializeField] private QuestSO _nextQuest;
+    [SerializeField] private QuestBaseSO _condition;
+    [SerializeField] private QuestBaseSO _nextQuest;
     [SerializeField] private bool _firstQuest;
 
     public CharacterID CharacterID => _characterID;
     public RewardItemSO RewardItem => _rewardItem;
     public QuestType QuestType => _questType;
-    public QuestSO Condition => _condition;
-    public QuestSO NextQuest => _nextQuest;
+    public QuestBaseSO Condition => _condition;
+    public QuestBaseSO NextQuest => _nextQuest;
     public bool FirstQuest => _firstQuest;
     public QuestStatus QuestStatus
     {

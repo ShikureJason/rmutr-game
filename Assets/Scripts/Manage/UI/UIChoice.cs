@@ -21,7 +21,7 @@ public class UIChoice : MonoBehaviour
         }
     }
 
-    private void SelectChoice(QuestBaseSO nextDialogue)
+    private void SelectChoice(QuestSO nextDialogue)
     {
         gameObject.SetActive(false);
         _questReceiveEventEmitter.RaiseEvent(nextDialogue);

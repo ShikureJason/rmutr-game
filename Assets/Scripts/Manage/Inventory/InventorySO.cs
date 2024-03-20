@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventorySO : MonoBehaviour
+[CreateAssetMenu(fileName = "Inventory", menuName = "Inventory/Inventory")]
+public class InventorySO : ScriptableObject
 {
     [SerializeField] private List<ItemStack> _items = new List<ItemStack>();
     [SerializeField] private List<ItemStack> _defaultItems = new List<ItemStack>();
@@ -22,7 +23,7 @@ public class InventorySO : MonoBehaviour
         }
     }
 
-    public void Add(Item item, int count = 1)
+    public void Add(ItemSO item, int count = 1)
     {
         if (count <= 0)
             return;
@@ -30,7 +31,7 @@ public class InventorySO : MonoBehaviour
         _items.Add(new ItemStack(item, count));
     }
 
-    public void Remove(Item item, int count = 1)
+    public void Remove(ItemSO item, int count = 1)
     {
         if (count <= 0)
             return;
@@ -51,7 +52,7 @@ public class InventorySO : MonoBehaviour
         }
     }
 
-    public bool Contains(Item  item)
+    public bool Contains(ItemSO item)
     {
         for (int i = 0; i < _items.Count; i++)
         {
@@ -63,7 +64,7 @@ public class InventorySO : MonoBehaviour
         return false;
     }
 
-    public int Count(Item item)
+    public int Count(ItemSO item)
     {
         for (int i = 0; i < _items.Count; i++)
         {

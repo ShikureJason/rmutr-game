@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Character Name", menuName = "Quests/Create Quest Character")]
+[CreateAssetMenu(fileName = "Quest", menuName = "Quests/Create List")]
 public class QuestList : ScriptableObject
 {
-    [SerializeField] List<QuestBaseSO> _questList;
+    [SerializeField] List<QuestSO> _questList;
 
-    public List<QuestBaseSO> List => _questList;
+    public List<QuestSO> List => _questList;
 }
