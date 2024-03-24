@@ -11,7 +11,9 @@ public class ZoneTriggerDetector : MonoBehaviour
     {
         if (((1 << other.gameObject.layer) & _layerMask) != 0)
         {
+            Debug.Log("add" + other.gameObject.tag);
             _triggerDetectEvent.RaiseEvent(true, other.gameObject);
+            
         }
     }
 
@@ -19,7 +21,9 @@ public class ZoneTriggerDetector : MonoBehaviour
     {
         if (((1 << other.gameObject.layer) & _layerMask) != 0)
         {
+            Debug.Log("remove" + other.gameObject.tag);
             _triggerDetectEvent.RaiseEvent(false, other.gameObject);
+            
         }
     }
 }

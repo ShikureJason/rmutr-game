@@ -7,4 +7,5 @@ public enum QuestType
     FindItem,
     Npc,
     FindLocation,
+    DefaultDialogue,
 }

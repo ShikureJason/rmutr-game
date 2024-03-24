@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField] private CharacterSO _character;
+    [SerializeField] private CharacterSO _character = default;
     [Header("Event Emitter")]
-    [SerializeField] private ShowDialogueEvent _showDialogueEventEmitter;
-    [SerializeField] private VoidEvent _endDialogueEventEmitter;
+    [SerializeField] private ShowDialogueEvent _showDialogueEventEmitter = default;
+    [SerializeField] private VoidEvent _endDialogueEventEmitter = default;
     [Header("Event Listener")]
-    [SerializeField] private SendDialogueEvent _sendDialogueEventListener;
+    [SerializeField] private SendDialogueEvent _sendDialogueEventListener = default;
 
     private DialogueSO dialogue;
     private int currentLine = 0;

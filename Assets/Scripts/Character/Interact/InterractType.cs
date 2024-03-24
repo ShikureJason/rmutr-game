@@ -4,4 +4,5 @@ public enum InteractType
     None,
     ItemPickup,
     ItemCollider,
+    NPC,
 }

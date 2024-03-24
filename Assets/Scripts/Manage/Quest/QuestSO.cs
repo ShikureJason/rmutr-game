@@ -12,6 +12,7 @@ public class QuestSO : ScriptableObject
     [SerializeField] private QuestStatus _questStatus;
     [SerializeField] private QuestType _questType;
     [SerializeField] private DialogueSO _dialogue;
+    [SerializeField] private QuestSO _defaultDialogue;
     [SerializeField] private List<ItemSO> _item;
     [SerializeField] List<ChoiceDetail> _choiceDetail;
     [SerializeField] private QuestSO _condition;
@@ -22,6 +23,7 @@ public class QuestSO : ScriptableObject
     public RewardItemSO RewardItem => _rewardItem;
     public QuestType QuestType => _questType;
     public DialogueSO Dialogue => _dialogue;
+    public QuestSO DefaultDialogue => _defaultDialogue;
     public List<ItemSO > Item => _item;
     public List<ChoiceDetail> Choices => _choiceDetail;
     public QuestSO Condition => _condition;

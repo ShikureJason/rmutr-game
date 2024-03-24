@@ -47,6 +47,7 @@ public class InteractManage : MonoBehaviour
         else
         {
             RemoveInteraction(obj);
+            Debug.Log("obj = " + obj);
         }
     }
 
@@ -57,7 +58,7 @@ public class InteractManage : MonoBehaviour
         switch (obj.tag)
         {
             case "NPC":
-                newInteract.type = InteractType.Talk;
+                newInteract.type = InteractType.NPC;
                 break;
             case "ItemPickup":
                 newInteract.type = InteractType.ItemPickup;

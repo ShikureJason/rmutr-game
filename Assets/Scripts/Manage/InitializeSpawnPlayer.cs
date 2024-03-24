@@ -1,7 +1,5 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
-
 public class InitializeSpawnPlayer : MonoBehaviour
 {
     [SerializeField] private CharacterPrefapSO _characterSpawn;
