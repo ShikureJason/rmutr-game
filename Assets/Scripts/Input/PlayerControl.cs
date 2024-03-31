@@ -24,7 +24,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     ""name"": ""PlayerControl"",
     ""maps"": [
         {
-            ""name"": ""OnGame"",
+            ""name"": ""GamePlay"",
             ""id"": ""5bb11621-cf6e-4a23-bfd6-ea2cace94dc5"",
             ""actions"": [
                 {
@@ -67,6 +67,15 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""df5cfee7-b7b2-47dd-a9ca-64d74733095d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interract"",
+                    ""type"": ""Button"",
+                    ""id"": ""97be1ce6-3676-4094-b660-aaf84a63cb90"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -172,19 +181,62 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ba87433-1b1f-4d62-8547-63a8b1de1e09"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Dialogue"",
+            ""id"": ""48717653-f6c5-44e6-988a-7cff884e9141"",
+            ""actions"": [
+                {
+                    ""name"": ""NextDialogue"",
+                    ""type"": ""Button"",
+                    ""id"": ""2302cc41-3150-4d8c-8dd9-508699f6a82c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4a904b88-a2a5-4ada-ac36-c8881fa50ead"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextDialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
     ],
     ""controlSchemes"": []
 }");
-        // OnGame
-        m_OnGame = asset.FindActionMap("OnGame", throwIfNotFound: true);
-        m_OnGame_Move = m_OnGame.FindAction("Move", throwIfNotFound: true);
-        m_OnGame_Jump = m_OnGame.FindAction("Jump", throwIfNotFound: true);
-        m_OnGame_MoveCamera = m_OnGame.FindAction("MoveCamera", throwIfNotFound: true);
-        m_OnGame_ZoomCamera = m_OnGame.FindAction("ZoomCamera", throwIfNotFound: true);
-        m_OnGame_Sprint = m_OnGame.FindAction("Sprint", throwIfNotFound: true);
+        // GamePlay
+        m_GamePlay = asset.FindActionMap("GamePlay", throwIfNotFound: true);
+        m_GamePlay_Move = m_GamePlay.FindAction("Move", throwIfNotFound: true);
+        m_GamePlay_Jump = m_GamePlay.FindAction("Jump", throwIfNotFound: true);
+        m_GamePlay_MoveCamera = m_GamePlay.FindAction("MoveCamera", throwIfNotFound: true);
+        m_GamePlay_ZoomCamera = m_GamePlay.FindAction("ZoomCamera", throwIfNotFound: true);
+        m_GamePlay_Sprint = m_GamePlay.FindAction("Sprint", throwIfNotFound: true);
+        m_GamePlay_Interract = m_GamePlay.FindAction("Interract", throwIfNotFound: true);
+        // Dialogue
+        m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
+        m_Dialogue_NextDialogue = m_Dialogue.FindAction("NextDialogue", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -243,32 +295,34 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // OnGame
-    private readonly InputActionMap m_OnGame;
-    private List<IOnGameActions> m_OnGameActionsCallbackInterfaces = new List<IOnGameActions>();
-    private readonly InputAction m_OnGame_Move;
-    private readonly InputAction m_OnGame_Jump;
-    private readonly InputAction m_OnGame_MoveCamera;
-    private readonly InputAction m_OnGame_ZoomCamera;
-    private readonly InputAction m_OnGame_Sprint;
-    public struct OnGameActions
+    // GamePlay
+    private readonly InputActionMap m_GamePlay;
+    private List<IGamePlayActions> m_GamePlayActionsCallbackInterfaces = new List<IGamePlayActions>();
+    private readonly InputAction m_GamePlay_Move;
+    private readonly InputAction m_GamePlay_Jump;
+    private readonly InputAction m_GamePlay_MoveCamera;
+    private readonly InputAction m_GamePlay_ZoomCamera;
+    private readonly InputAction m_GamePlay_Sprint;
+    private readonly InputAction m_GamePlay_Interract;
+    public struct GamePlayActions
     {
         private @PlayerControl m_Wrapper;
-        public OnGameActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_OnGame_Move;
-        public InputAction @Jump => m_Wrapper.m_OnGame_Jump;
-        public InputAction @MoveCamera => m_Wrapper.m_OnGame_MoveCamera;
-        public InputAction @ZoomCamera => m_Wrapper.m_OnGame_ZoomCamera;
-        public InputAction @Sprint => m_Wrapper.m_OnGame_Sprint;
-        public InputActionMap Get() { return m_Wrapper.m_OnGame; }
+        public GamePlayActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_GamePlay_Move;
+        public InputAction @Jump => m_Wrapper.m_GamePlay_Jump;
+        public InputAction @MoveCamera => m_Wrapper.m_GamePlay_MoveCamera;
+        public InputAction @ZoomCamera => m_Wrapper.m_GamePlay_ZoomCamera;
+        public InputAction @Sprint => m_Wrapper.m_GamePlay_Sprint;
+        public InputAction @Interract => m_Wrapper.m_GamePlay_Interract;
+        public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(OnGameActions set) { return set.Get(); }
-        public void AddCallbacks(IOnGameActions instance)
+        public static implicit operator InputActionMap(GamePlayActions set) { return set.Get(); }
+        public void AddCallbacks(IGamePlayActions instance)
         {
-            if (instance == null || m_Wrapper.m_OnGameActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_OnGameActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_GamePlayActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GamePlayActionsCallbackInterfaces.Add(instance);
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
@@ -284,9 +338,12 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @Interract.started += instance.OnInterract;
+            @Interract.performed += instance.OnInterract;
+            @Interract.canceled += instance.OnInterract;
         }
 
-        private void UnregisterCallbacks(IOnGameActions instance)
+        private void UnregisterCallbacks(IGamePlayActions instance)
         {
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
@@ -303,29 +360,83 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @Interract.started -= instance.OnInterract;
+            @Interract.performed -= instance.OnInterract;
+            @Interract.canceled -= instance.OnInterract;
         }
 
-        public void RemoveCallbacks(IOnGameActions instance)
+        public void RemoveCallbacks(IGamePlayActions instance)
         {
-            if (m_Wrapper.m_OnGameActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_GamePlayActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IOnGameActions instance)
+        public void SetCallbacks(IGamePlayActions instance)
         {
-            foreach (var item in m_Wrapper.m_OnGameActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_GamePlayActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_OnGameActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_GamePlayActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public OnGameActions @OnGame => new OnGameActions(this);
-    public interface IOnGameActions
+    public GamePlayActions @GamePlay => new GamePlayActions(this);
+
+    // Dialogue
+    private readonly InputActionMap m_Dialogue;
+    private List<IDialogueActions> m_DialogueActionsCallbackInterfaces = new List<IDialogueActions>();
+    private readonly InputAction m_Dialogue_NextDialogue;
+    public struct DialogueActions
+    {
+        private @PlayerControl m_Wrapper;
+        public DialogueActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
+        public InputAction @NextDialogue => m_Wrapper.m_Dialogue_NextDialogue;
+        public InputActionMap Get() { return m_Wrapper.m_Dialogue; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DialogueActions set) { return set.Get(); }
+        public void AddCallbacks(IDialogueActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DialogueActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DialogueActionsCallbackInterfaces.Add(instance);
+            @NextDialogue.started += instance.OnNextDialogue;
+            @NextDialogue.performed += instance.OnNextDialogue;
+            @NextDialogue.canceled += instance.OnNextDialogue;
+        }
+
+        private void UnregisterCallbacks(IDialogueActions instance)
+        {
+            @NextDialogue.started -= instance.OnNextDialogue;
+            @NextDialogue.performed -= instance.OnNextDialogue;
+            @NextDialogue.canceled -= instance.OnNextDialogue;
+        }
+
+        public void RemoveCallbacks(IDialogueActions instance)
+        {
+            if (m_Wrapper.m_DialogueActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDialogueActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DialogueActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DialogueActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DialogueActions @Dialogue => new DialogueActions(this);
+    public interface IGamePlayActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnMoveCamera(InputAction.CallbackContext context);
         void OnZoomCamera(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnInterract(InputAction.CallbackContext context);
+    }
+    public interface IDialogueActions
+    {
+        void OnNextDialogue(InputAction.CallbackContext context);
     }
 }

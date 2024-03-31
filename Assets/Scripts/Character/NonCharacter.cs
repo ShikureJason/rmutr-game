@@ -9,6 +9,7 @@ public class NonCharacter : MonoBehaviour
 
     public void Interact()
     {
+        Debug.Log("Press");
         _interactQuestEventEmitter.RaiseEvent(_characterID);
     }
 

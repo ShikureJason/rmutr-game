@@ -15,20 +15,18 @@ public class InventoryManager : MonoBehaviour
 
     private void OnEnable()
     {
-        _useItemEventListener.OnEventRaised += UseItemEventRaised;
-        _equipItemEventListener.OnEventRaised += EquipItemEventRaised;
+        //_equipItemEventListener.OnEventRaised += EquipItemEventRaised;
         _addItemEventListener.OnEventRaised += AddItem;
-        _removeItemEventListener.OnEventRaised += RemoveItem;
-        _rewardItemEventListener.OnEventRaised += AddItemStack;
-        _giveItemEventListener.OnEventRaised += RemoveItem;
+       // _removeItemEventListener.OnEventRaised += RemoveItem;
+        //_giveItemEventListener.OnEventRaised += RemoveItem;
     }
 
     private void OnDisable()
     {
-        _useItemEventListener.OnEventRaised -= UseItemEventRaised;
-        _equipItemEventListener.OnEventRaised -= EquipItemEventRaised;
+        //_equipItemEventListener.OnEventRaised -= EquipItemEventRaised;
         _addItemEventListener.OnEventRaised -= AddItem;
-        _removeItemEventListener.OnEventRaised -= RemoveItem;
+        //_removeItemEventListener.OnEventRaised -= RemoveItem;
+        //_giveItemEventListener.OnEventRaised = RemoveItem;
     }
 
     private void AddItemWithUIUpdate(ItemSO item)
@@ -54,28 +52,21 @@ public class InventoryManager : MonoBehaviour
         bool removeItem = _currentInventory.Contains(item);
     }
 
-    private void AddItem(ItemSO item)
+    private void AddItem(ItemSO item, int stack)
     {
-        _currentInventory.Add(item);
+        _currentInventory.Add(item, stack);
        // _saveSystem.SaveDataToDisk();
     }
 
-    private void AddItemStack(ItemStack itemStack)
+    private void RemoveItem(ItemSO item, int stack)
     {
-        _currentInventory.Add(itemStack.Item, itemStack.Amount);
-       // _saveSystem.SaveDataToDisk();
+        _currentInventory.Remove(item, stack);
     }
 
-    private void RemoveItem(ItemSO item)
-    {
-        _currentInventory.Remove(item);
-        //_saveSystem.SaveDataToDisk();
-    }
-
-    private void UseItemEventRaised(ItemSO item)
+    /*private void UseItemEventRaised(ItemSO item)
     {
         RemoveItem(item);
-    }
+    }*/
 
     //This empty function is left here for the possibility of adding decorative 3D items
     private void EquipItemEventRaised(ItemSO item)

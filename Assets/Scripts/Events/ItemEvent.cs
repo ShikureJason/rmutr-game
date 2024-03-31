@@ -4,7 +4,7 @@ using UnityEngine.Events;
 [CreateAssetMenu(fileName = "Item Event", menuName = "Events/Inventory/Create Item Event")]
 public class ItemEvent : BaseScriptableObject
 {
-    public UnityAction<ItemSO> OnEventRaised;
+    public UnityAction<ItemSO, int> OnEventRaised;
 
-    public void RaiseEvent(ItemSO item) => OnEventRaised.Invoke(item);
+    public void RaiseEvent(ItemSO item, int stack) => OnEventRaised.Invoke(item, stack);
 }

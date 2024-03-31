@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SaveSystem", menuName = "GameManager/SaveSystem")]
-public class SaveDataSO : ScriptableObject
+public class SaveDataSO : BaseScriptableObject
 {
     // Start is called before the first frame update
     [SerializeField] private string _saveFileName = default;

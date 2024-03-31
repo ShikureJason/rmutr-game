@@ -38,6 +38,7 @@ public class LoadSceneManager : MonoBehaviour
 
     private void LoadScene(SceneSO sceneRef)
     {
+        Debug.Log("Load");
         if (isLoading)
             return;
         isLoading = true;

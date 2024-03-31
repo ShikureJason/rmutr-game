@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 [CreateAssetMenu(fileName = "New Scene", menuName = "Scenes/Create Scene")]
-public class SceneSO : ScriptableObject
+public class SceneSO : BaseScriptableObject
 {
     [SerializeField] private AssetReference _scene;
     [SerializeField] private SceneType _sceneType = default;

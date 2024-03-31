@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +9,8 @@ public class InteractManage : MonoBehaviour
     [Header("Event Listener")]
     [SerializeField] private TriggerDetectEvent _triggerDetectEventListener = default;
 
-    private List<Interact> _interact = new List<Interact>();
+    [Header("Data")]
+    [SerializeField] private List<Interact> _interact = new List<Interact>();
 
     private void OnEnable()
     {
@@ -26,14 +26,21 @@ public class InteractManage : MonoBehaviour
 
     private void OnInteractButtonPress()
     {
+        Debug.Log("Interract");
         if (_interact.Count == 0)
-        {
             return;
-        }
 
-        if (_interact[0].type == InteractType.Talk)
+        switch (_interact[0].type)
         {
-            _interact[0].interactableObject.GetComponent<NonCharacter>().Interact();
+            case InteractType.NPC:
+                _interact[0].interactableObject.GetComponent<NonCharacter>().Interact();
+                break;
+            case InteractType.ItemPickup:
+                _interact[0].interactableObject.GetComponent<Item>().Interract();
+                break;
+            default:
+                Debug.Log("none");
+                break;
         }
     }
 
@@ -42,12 +49,10 @@ public class InteractManage : MonoBehaviour
         if (isDetect)
         {
             AddInteraction(obj);
-            Debug.Log("obj = " + obj);
         }
         else
         {
             RemoveInteraction(obj);
-            Debug.Log("obj = " + obj);
         }
     }
 
@@ -87,6 +92,7 @@ public class InteractManage : MonoBehaviour
     {
         if (_interact.Count == 0)
             return;
+        Debug.Log(_interact[0].type);
         _interactEventEmitter.OnEventRaised(_interact[0].type, false);
         _interact.RemoveAll(interact => interact.interactableObject == obj);
     }

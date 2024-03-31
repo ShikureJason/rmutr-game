@@ -8,25 +8,40 @@ public class GameManager : MonoBehaviour
     [Header("Event Listener")]
     [SerializeField] private SceneTypeEvent _switchInputEventListener = default;
     [SerializeField] private InteractEvent _switchInteractionEventListener = default;
+    [SerializeField] private BoolEvent _dialogueEventListener = default;
+
+    private SceneType currentSceneType;
 
     private void OnEnable()
     {
-        _switchInputEventListener.OnEventRaised += switchInputReader;
+        _switchInputEventListener.OnEventRaised += switchInputReaderWithSceneType;
+        _switchInputEventListener.OnEventRaised += setCurrentSceneType;
+        _dialogueEventListener.OnEventRaised += setInputDialogue;
     }
 
     private void OnDisable()
     {
-        _switchInputEventListener.OnEventRaised -= switchInputReader;
+        _switchInputEventListener.OnEventRaised -= switchInputReaderWithSceneType;
+        _switchInputEventListener.OnEventRaised -= setCurrentSceneType;
+        _dialogueEventListener.OnEventRaised -= setInputDialogue;
     }
 
-    private void interractDetect(InteractType interact, bool hasInterract)
+    private void setInputDialogue(bool expression)
     {
-        
+        if (expression)
+        {
+            _inputReader.DisableAllInput();
+            _inputReader.EnableDialogue();
+        } 
+        else 
+        {
+            setCurrentInputReader();
+        }
     }
-
-    private void switchInputReader(SceneType Type)
+      
+    private void switchInputReaderWithSceneType(SceneType type)
     {
-        switch (Type)
+        switch (type)
         {
             case SceneType.Main:
                 _inputReader.EnableGameplay();
@@ -36,4 +51,8 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+
+    private void setCurrentInputReader() => switchInputReaderWithSceneType(currentSceneType);
+
+    private void setCurrentSceneType(SceneType type) => currentSceneType = type;
 }

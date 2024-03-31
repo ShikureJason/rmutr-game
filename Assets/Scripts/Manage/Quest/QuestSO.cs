@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New QuestData", menuName = "Quests/Create Quest")]
-public class QuestSO : ScriptableObject
+public class QuestSO : BaseScriptableObject
 {
     public readonly string GUID = Guid.NewGuid().ToString();
 

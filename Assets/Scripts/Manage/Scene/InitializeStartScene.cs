@@ -7,7 +7,7 @@ public class InitializeStartScene : MonoBehaviour
 {
     [SerializeField] private SceneSO _localScene;
 #if UNITY_EDITOR
-    [SerializeField] private SceneSO _gameManageScene;
+    [SerializeField] private GameObject _gameManage;
 
     [Header("Event Emitter")]
     [SerializeField] private SceneEvent _loadSceneEventEditorEmitter;
@@ -31,13 +31,10 @@ public class InitializeStartScene : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    private void Awake()
+    private void Start()
     {
-        _sceneManageHasLoaded = SceneManager.GetSceneByName(_gameManageScene.Scene.editorAsset.name).isLoaded;
-        if (!_sceneManageHasLoaded)
-        {
-            _gameManageScene.Scene.LoadSceneAsync(LoadSceneMode.Additive, true).Completed += LoadSceneEvent;
-        }
+        LoadSceneEvent();
+        // _gameManageScene.Scene.LoadSceneAsync(LoadSceneMode.Additive, true).Completed += LoadSceneEvent;
     }
 #endif
 
@@ -47,7 +44,7 @@ public class InitializeStartScene : MonoBehaviour
         _switchInputEventEmitter.RaiseEvent(_localScene.SceneType);
     }
 
-    private void LoadSceneEvent(AsyncOperationHandle<SceneInstance> scene)
+    private void LoadSceneEvent()
     {
         _loadSceneEventEditorEmitter.RaiseEvent(_localScene);
     }
@@ -56,4 +53,5 @@ public class InitializeStartScene : MonoBehaviour
     {
         _switchInputEventEmitter.RaiseEvent(_localScene.SceneType);
     }
+
 }

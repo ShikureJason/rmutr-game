@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "InputReader", menuName = "Game Manager/Input Reader")]
-public class InputReaderSO : ScriptableObject, PlayerControl.IOnGameActions
+public class InputReaderSO : ScriptableObject, PlayerControl.IGamePlayActions, PlayerControl.IDialogueActions
 {
     public UnityAction<Vector2> MoveEvent;
     public UnityAction JumpEvent;
@@ -25,12 +23,14 @@ public class InputReaderSO : ScriptableObject, PlayerControl.IOnGameActions
     private void OnEnable()
     {
         _playerControl = new PlayerControl();
-        _playerControl.OnGame.SetCallbacks(this);
+        _playerControl.GamePlay.SetCallbacks(this);
+        _playerControl.Dialogue.SetCallbacks(this);
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        JumpEvent.Invoke();
+        if (context.phase == InputActionPhase.Performed)
+            JumpEvent.Invoke();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -56,14 +56,32 @@ public class InputReaderSO : ScriptableObject, PlayerControl.IOnGameActions
         ZoomCameraEvent.Invoke(context.ReadValue<Vector2>());
     }
 
+    public void OnInterract(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+            InteractEvent.Invoke();
+    }
+
+    //Dialogue Action
+    public void OnNextDialogue(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+            NextDialogueEvent.Invoke();
+    }
+
     public void EnableGameplay()
     {
-        _playerControl.OnGame.Enable();
+        _playerControl.GamePlay.Enable();
+    }
+
+    public void EnableDialogue()
+    {
+        _playerControl.Dialogue.Enable();
     }
 
     public void DisableAllInput()
     {
-        _playerControl.OnGame.Disable();
+        _playerControl.GamePlay.Disable();
     }
 
 }
