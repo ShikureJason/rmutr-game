@@ -11,7 +11,6 @@ public class InitializeGameManage : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            Debug.Log("Start");
             DontDestroyOnLoad(gameObject);
         }
         else if (instance != this)
