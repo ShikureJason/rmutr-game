@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Quest", menuName = "Quests/Create List")]
 public class QuestList : BaseScriptableObject
 {
-    [SerializeField] List<QuestSO> _questList;
+    [SerializeField] List<QuestBaseSO> _questList;
 
-    public List<QuestSO> List => _questList;
+    public List<QuestBaseSO> List => _questList;
 }

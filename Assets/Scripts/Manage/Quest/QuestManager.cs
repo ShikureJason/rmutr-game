@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using RMUTR.Quest;
 using UnityEngine;
 
 public class QuestManager : MonoBehaviour
@@ -10,38 +11,46 @@ public class QuestManager : MonoBehaviour
 
     [Header("Event Listener")]
     [SerializeField] private CharacterEvent _interactQuestEventListener = default;
-    [SerializeField] private StringEvent _questGUIDEventListener = default;
+    [SerializeField] private QuestEvent _questEventListener = default;
     [SerializeField] private VoidEvent _endDialogueEventListener = default;
 
     [Header("Data")]
-    [SerializeField] private List<QuestSO> _currentQuest = default;
-    [SerializeField] private List<QuestSO> _defaultDialogue = default;
+    [SerializeField] private List<QuestBaseSO> _currentQuest = default;
+    [SerializeField] private List<QuestDialogue> _defaultDialogue = default;
 
-    private QuestSO runningQuest;
+    private QuestBaseSO runningQuest;
 
     private void OnEnable()
     {
         _endDialogueEventListener.OnEventRaised += dialogueEnd;
-        _questGUIDEventListener.OnEventRaised += questfindLocation;
+        _questEventListener.OnEventRaised += getQuest;
         _interactQuestEventListener.OnEventRaised += characterGetQuest;
     }
     private void OnDisable()
     { 
         _endDialogueEventListener.OnEventRaised -= dialogueEnd;
-        _questGUIDEventListener.OnEventRaised -= questfindLocation;
+        _questEventListener.OnEventRaised -= getQuest;
         _interactQuestEventListener.OnEventRaised -= characterGetQuest;
     }
 
-    private void Awake()
+    private void Start()
     {
         if(_currentQuest.Count == 0)
         {
             int indexQuestList = _questList.FindIndex(o => o.List.Find(o => o.FirstQuest == true));
             int indexList = _questList[indexQuestList].List.FindIndex(o => o.FirstQuest == true);
 
-            QuestSO _quest = _questList[indexQuestList].List[indexList];
+            QuestBaseSO _quest = _questList[indexQuestList].List[indexList];
             _quest.QuestStatus = QuestStatus.Running;
             _currentQuest.Add(_quest);
+        }
+    }
+
+    private void getQuest(QuestBaseSO quest)
+    {
+        if (runningQuest is QuestFindLocation )
+        {
+            questfindLocation((QuestFindLocation)quest);
         }
     }
 
@@ -53,11 +62,11 @@ public class QuestManager : MonoBehaviour
         runningQuest = _currentQuest.Find(o => o.CharacterID == id);
         if (runningQuest)
         {
-            switch (runningQuest.QuestType)
+            if (runningQuest is QuestDialogue)
             {
-                case QuestType.Talk:
-                    _sendDialogueEventEmitter.RaiseEvent(runningQuest.Dialogue);
-                    break;
+                var questDialogue = (QuestDialogue)runningQuest;
+                _sendDialogueEventEmitter.RaiseEvent(questDialogue.Dialogue);
+                return;
             }
         }
         else
@@ -73,17 +82,18 @@ public class QuestManager : MonoBehaviour
         questFinish(runningQuest, runningQuest.NextQuest);
     }
 
-    private void questfindLocation(string guid)
+    private void questfindLocation(QuestFindLocation quest)
     {
           if (runningQuest)
             return;
 
-        runningQuest = _currentQuest.Find(o => o.GUID == guid);
+        runningQuest = _currentQuest.Find(o => o.GUID == quest.GUID);
         if (runningQuest)
         {
-            if (runningQuest.Dialogue)
+            QuestDialogue hasDialogue = (QuestDialogue)quest.NextQuest.List.Find(o => o.QuestType == QuestType.Dialogue);
+            if (hasDialogue)
             {
-                _sendDialogueEventEmitter.RaiseEvent(runningQuest.Dialogue);
+                _sendDialogueEventEmitter.RaiseEvent(hasDialogue.Dialogue);
             }
             else if (runningQuest.NextQuest)
             {
@@ -92,13 +102,33 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    private void questFinish(QuestSO finishQuest, QuestSO nextQuest)
+    private void questFinish(QuestBaseSO finishQuest, QuestList nextQuest)
     {
         runningQuest = null;
         finishQuest.QuestStatus = QuestStatus.Complete;
         _currentQuest.Remove(finishQuest);
-        _currentQuest.Add(nextQuest);
-        if(nextQuest.DefaultDialogue)
+        
+        if (nextQuest != null)
+        {
+            for (int i = 0; i <= nextQuest.List.Count; i++) 
+            {
+                nextQuest.List[i].QuestStatus = QuestStatus.Running;
+                if (nextQuest.List[i].QuestType == QuestType.DefaultDialogue)
+                {
+                    _defaultDialogue.Add((QuestDialogue)nextQuest.List[i]);
+                    QuestDialogue hasDefaultDialogue = _defaultDialogue.Find(o => o.CharacterID == finishQuest.CharacterID);
+                    if (hasDefaultDialogue)
+                    {
+                        hasDefaultDialogue.QuestStatus = QuestStatus.Complete;
+                        _defaultDialogue.Remove(_defaultDialogue.Find(o => o.CharacterID == finishQuest.CharacterID));
+                    }
+                    return;
+                }
+                _currentQuest.Add(nextQuest.List[i]);
+            }
+        }
+
+        /*if(nextQuest.DefaultDialogue)
         {
             _defaultDialogue.Add(nextQuest.DefaultDialogue);
             if (_defaultDialogue.Find(o => o.CharacterID == finishQuest.CharacterID))
@@ -107,11 +137,9 @@ public class QuestManager : MonoBehaviour
             }
         }
 
-        nextQuest.QuestStatus = QuestStatus.Running;
-
         if (nextQuest.CharacterID != CharacterID.None)
         {
             _characterHasQuestEmitter.RaiseEvent(nextQuest.CharacterID);
-        }
+        }*/
     }
 }
