@@ -10,6 +10,7 @@ public class SaveData
     public Vector3 Position;
     public Quaternion Rotation;
 
+    [Header("Setting")]
     public int localindex;
     public int resolutionindex;
     public int qualityindex;

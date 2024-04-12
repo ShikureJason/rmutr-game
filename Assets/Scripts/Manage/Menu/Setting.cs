@@ -22,7 +22,7 @@ public class Setting : MonoBehaviour
 
 
     private int currentlocalindex = 0;
-    private int currentresolutionindex = 0;
+    private int currentresolutionindex = 0;  
     private int currentqualityindex = 0;
     private float currentmastervolume = 0;
     private float currentmusicvolume = 0;
