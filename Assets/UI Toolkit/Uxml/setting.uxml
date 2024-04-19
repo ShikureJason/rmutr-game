@@ -1,0 +1,43 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/USS/Settings.uss?fileID=7433441132597879392&amp;guid=c635e6e3cd6b34847943e6c97ca0b230&amp;type=3#Settings" />
+    <Style src="project://database/Assets/UI%20Toolkit/USS/Button.uss?fileID=7433441132597879392&amp;guid=189d90e42b79cb04da2639898eb78bed&amp;type=3#Button" />
+    <ui:VisualElement name="setting_background" style="height: 1083px; justify-content: center; background-color: rgba(0, 0, 0, 0.29);">
+        <ui:Label text="setting" display-tooltip-when-elided="true" name="text_setting" style="font-size: 50px; -unity-text-align: upper-center; align-items: center; margin-top: 0; margin-bottom: 0; top: auto; bottom: 100px;" />
+        <ui:VisualElement name="UI_setting_background" style="align-items: center;">
+            <ui:VisualElement name="lanuage_setting" class="setting" style="justify-content: space-between; width: 800px;">
+                <ui:Label text="Lanuage" display-tooltip-when-elided="true" class="text_setting" style="align-items: flex-start;" />
+                <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" name="DropdownField" class="choice" style="justify-content: flex-end; color: rgb(255, 255, 255);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="resolution" class="setting" style="width: 800px; justify-content: space-between;">
+                <ui:Label text="Resolution" display-tooltip-when-elided="true" class="text_setting" style="align-items: flex-start;" />
+                <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" class="choice" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="Full Screen" display-tooltip-when-elided="true" style="left: 260px; font-size: 20px; justify-content: center; align-items: center; -unity-text-align: middle-center;" />
+                <ui:Toggle name="full_screen" value="false" style="left: 290px; width: 30px; height: 30px; justify-content: center; align-items: center; scale: 2 2;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="quality" class="setting" style="justify-content: space-between; width: 800px;">
+                <ui:Label text="Quality" display-tooltip-when-elided="true" class="text_setting" style="font-size: 35px; -unity-text-align: upper-left;" />
+                <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" class="choice" />
+            </ui:VisualElement>
+            <ui:VisualElement style="top: 50px;">
+                <ui:VisualElement style="flex-direction: row; width: 800px; justify-content: space-between;">
+                    <ui:Label text="Music" display-tooltip-when-elided="true" class="text_setting" />
+                    <ui:Slider picking-mode="Ignore" value="42" high-value="1" name="music_slider" style="width: 300px; height: 50px; align-items: center; left: auto;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-direction: row; width: 800px; justify-content: space-between;">
+                    <ui:Label text="Songs" display-tooltip-when-elided="true" class="text_setting" />
+                    <ui:Slider picking-mode="Ignore" value="42" high-value="1" name="songs_slider" style="width: 300px; height: 50px; left: auto; align-items: center;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-direction: row; width: 800px; justify-content: space-between;">
+                    <ui:Label text="Sound" display-tooltip-when-elided="true" class="text_setting" />
+                    <ui:Slider picking-mode="Ignore" value="42" high-value="1" name="sound_slider" style="height: 50px; width: 300px; align-items: center; left: auto;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement style="align-items: center; flex-direction: row; top: 100px;">
+                <ui:Button display-tooltip-when-elided="true" class="button_main_manu" style="right: 20px; background-image: url(&apos;project://database/Assets/UI%20Toolkit/Textures/apply.png?fileID=2800000&amp;guid=ebc63cbdee8425e46a5c03f1fcecda8f&amp;type=3#apply&apos;); background-color: rgb(255, 255, 255); border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0); border-top-left-radius: 30px; border-bottom-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px;" />
+                <ui:Button display-tooltip-when-elided="true" class="button_main_manu" style="left: 20px; border-top-left-radius: 30px; border-bottom-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; background-image: url(&apos;project://database/Assets/UI%20Toolkit/Textures/back.png?fileID=2800000&amp;guid=ff97e8dc5455f5b43b91fc7771c14fbb&amp;type=3#back&apos;); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

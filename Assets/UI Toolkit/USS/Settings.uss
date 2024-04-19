@@ -1,0 +1,22 @@
+.setting {
+    flex-direction: row;
+}
+
+.setting_slider {
+    flex-direction: row;
+}
+
+.text_setting {
+    font-size: 35px;
+    right: auto;
+}
+
+.choice {
+    width: 300px;
+    height: 40px;
+    justify-content: center;
+    left: 0;
+}
+
+.tri {
+}
