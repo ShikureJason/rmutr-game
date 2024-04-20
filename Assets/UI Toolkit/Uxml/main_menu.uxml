@@ -1,10 +1,14 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/USS/Button.uss?fileID=7433441132597879392&amp;guid=189d90e42b79cb04da2639898eb78bed&amp;type=3#Button" />
-    <ui:VisualElement name="main_menu" style="min-width: auto; justify-content: center; align-items: center; max-height: none; height: auto; position: relative; width: auto; min-height: 200px;">
-        <ui:VisualElement name="VisualElement" style="min-height: 1080px; align-items: center; flex-shrink: 1; flex-grow: 0; margin-top: 0; min-width: auto; justify-content: center;">
-            <ui:Button display-tooltip-when-elided="true" name="Button" class="button_main_manu" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; background-image: url(&apos;project://database/Assets/UI%20Toolkit/Textures/start_new_game.png?fileID=2800000&amp;guid=a39d72b8fe3225e4e809288abfaf0abf&amp;type=3#start_new_game&apos;); transition-duration: 0.1s;" />
-            <ui:Button display-tooltip-when-elided="true" name="Button" class="button_main_manu" style="background-image: url(&apos;project://database/Assets/UI%20Toolkit/Textures/setting.png?fileID=2800000&amp;guid=f88bd4db5cdc0e640bc8c3694195b6f2&amp;type=3#setting&apos;);" />
-            <ui:Button display-tooltip-when-elided="true" name="Button" class="button_main_manu" style="background-image: url(&apos;project://database/Assets/UI%20Toolkit/Textures/exit.png?fileID=2800000&amp;guid=989b0eacd55474143823adb6e48dc2bc&amp;type=3#exit&apos;);" />
-        </ui:VisualElement>
+    <ui:VisualElement name="bg_main_menu" style="min-width: auto; justify-content: center; align-items: center; max-height: none; height: 100%; position: relative; width: 100%; min-height: 200px;">
+        <ui:Button display-tooltip-when-elided="true" name="Button_setting" class="button_main_manu" style="background-image: none; align-items: center; justify-content: center; margin-bottom: 0; margin-right: 0; margin-left: 0;">
+            <ui:Label text="ตั้งค่า" display-tooltip-when-elided="true" name="label_setting" style="font-size: 35px;" />
+        </ui:Button>
+        <ui:Button display-tooltip-when-elided="true" name="Button_exit" class="button_main_manu" style="background-image: none; align-items: center; justify-content: center; margin-bottom: 0; margin-right: 0; margin-left: 0;">
+            <ui:Label text="ออกจากเกม" display-tooltip-when-elided="true" name="label_exit" style="font-size: 35px;" />
+        </ui:Button>
+        <ui:Button display-tooltip-when-elided="true" name="Button_start" class="button_main_manu" style="margin-left: 0; margin-right: 0; margin-top: 30px; margin-bottom: 0; background-image: none; transition-duration: 0.1s; align-items: center; justify-content: center;">
+            <ui:Label text="เริ่มเกม" display-tooltip-when-elided="true" name="label_start" style="font-size: 35px;" />
+        </ui:Button>
     </ui:VisualElement>
 </ui:UXML>
