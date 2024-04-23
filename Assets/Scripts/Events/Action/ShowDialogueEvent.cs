@@ -1,0 +1,11 @@
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Localization;
+
+[CreateAssetMenu(fileName = "StartDialogueEvent", menuName = "Events/Action/Show Dialogue")]
+public class ShowDialogueEvent : ScriptableObject
+{
+    public UnityAction<LocalizedString, LocalizedString> OnEventRaised;
+
+    public void RaiseEvent(LocalizedString dialogue, LocalizedString name) => OnEventRaised?.Invoke(dialogue, name);
+}
