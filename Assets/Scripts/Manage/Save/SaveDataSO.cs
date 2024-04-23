@@ -16,7 +16,7 @@ public class SaveDataSO : BaseScriptableObject
     [Header("Evnet Listener")]
     [SerializeField] private VoidEvent _startNewGameDataListener = default;
 
-    public SaveData SaveData = new SaveData();
+    public SaveData SaveData = new SaveData("");
 
     private void OnEnable()
     {

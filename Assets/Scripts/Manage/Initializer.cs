@@ -9,7 +9,19 @@ public class Initializer : MonoBehaviour
     [SerializeField] private SceneSO _loadNextScene;
 
     [Header("Event Emitter")]
-    [SerializeField] private LoadSceneEvent _loadSceneEventEmitter;
+    [SerializeField] private SceneEvent _loadSceneEventEmitter;
+
+    [Header("Event Listener")]
+    [SerializeField] private VoidEvent _initailizeManageFinsihEventListener = default;
+
+    private void OnEnable()
+    {
+        _initailizeManageFinsihEventListener.OnEventRaised += LoadSceneFinish;
+    }
+    private void OnDisable()
+    {
+        _initailizeManageFinsihEventListener.OnEventRaised -= LoadSceneFinish;
+    }
     private void Start()
     {
         _mangeScene.Scene.LoadSceneAsync(LoadSceneMode.Additive, true).Completed += LoadSceneEvent;
@@ -17,7 +29,12 @@ public class Initializer : MonoBehaviour
 
     private void LoadSceneEvent(AsyncOperationHandle<SceneInstance> obj)
     {
-        _loadSceneEventEmitter.RaiseEvent(_loadNextScene);
         SceneManager.UnloadSceneAsync(0);
+    }
+
+    private void LoadSceneFinish()
+    {
+        _loadSceneEventEmitter.RaiseEvent(_loadNextScene);
+        Debug.Log("Send");
     }
 }

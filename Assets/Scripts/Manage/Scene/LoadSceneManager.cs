@@ -28,6 +28,14 @@ public class LoadSceneManager : MonoBehaviour
 
     }
 
+    private void OnDisable()
+    {
+        loadSceneEventListener.OnEventRaised -= LoadScene;
+#if UNITY_EDITOR
+        loadSceneEditEventListener.OnEventRaised -= LoadSceneEdit;
+#endif
+    }
+
 #if UNITY_EDITOR
     private void LoadSceneEdit(SceneSO sceneRef)
     {

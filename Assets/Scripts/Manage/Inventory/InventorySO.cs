@@ -10,7 +10,7 @@ public class InventorySO : BaseScriptableObject
 
     public List<ItemStack> Items => _items;
 
-    public void Init()
+    public void Initialize()
     {
         if (_items == null)
         {

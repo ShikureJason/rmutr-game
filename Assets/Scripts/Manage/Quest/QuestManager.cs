@@ -13,10 +13,10 @@ public class QuestManager : MonoBehaviour
     [SerializeField] private CharacterEvent _interactQuestEventListener = default;
     [SerializeField] private QuestEvent _questEventListener = default;
     [SerializeField] private VoidEvent _endDialogueEventListener = default;
+    [SerializeField] private VoidEvent _initializeManageEventListener = default;
 
     [Header("Data")]
-    [SerializeField] private List<QuestBaseSO> _currentQuest = default;
-    [SerializeField] private List<QuestDialogue> _defaultDialogue = default;
+    [SerializeField] private QuestDataSO _questData = default;
 
     private QuestBaseSO runningQuest;
 
@@ -25,24 +25,27 @@ public class QuestManager : MonoBehaviour
         _endDialogueEventListener.OnEventRaised += dialogueEnd;
         _questEventListener.OnEventRaised += getQuest;
         _interactQuestEventListener.OnEventRaised += characterGetQuest;
+        _initializeManageEventListener.OnEventRaised += Initialize;
     }
     private void OnDisable()
     { 
         _endDialogueEventListener.OnEventRaised -= dialogueEnd;
         _questEventListener.OnEventRaised -= getQuest;
         _interactQuestEventListener.OnEventRaised -= characterGetQuest;
+        _initializeManageEventListener.OnEventRaised -= Initialize;
     }
 
-    private void Start()
+    private void Initialize()
     {
-        if(_currentQuest.Count == 0)
+        _questData.Initialize();
+        if (_questData.CurrentQuest.Count == 0)
         {
             int indexQuestList = _questList.FindIndex(o => o.List.Find(o => o.FirstQuest == true));
             int indexList = _questList[indexQuestList].List.FindIndex(o => o.FirstQuest == true);
 
             QuestBaseSO _quest = _questList[indexQuestList].List[indexList];
             _quest.QuestStatus = QuestStatus.Running;
-            _currentQuest.Add(_quest);
+            _questData.CurrentQuest.Add(_quest);
         }
     }
 
@@ -59,7 +62,7 @@ public class QuestManager : MonoBehaviour
         if (runningQuest)
             return;
 
-        runningQuest = _currentQuest.Find(o => o.CharacterID == id);
+        runningQuest = _questData.CurrentQuest.Find(o => o.CharacterID == id);
         if (runningQuest)
         {
             if (runningQuest is QuestDialogue)
@@ -71,7 +74,7 @@ public class QuestManager : MonoBehaviour
         }
         else
         {
-            _sendDialogueEventEmitter.RaiseEvent(_defaultDialogue.Find(o => o.CharacterID == id).Dialogue);
+            _sendDialogueEventEmitter.RaiseEvent(_questData.DefaultDialogue.Find(o => o.CharacterID == id).Dialogue);
         }
     }
 
@@ -87,7 +90,7 @@ public class QuestManager : MonoBehaviour
           if (runningQuest)
             return;
 
-        runningQuest = _currentQuest.Find(o => o.GUID == quest.GUID);
+        runningQuest = _questData.CurrentQuest.Find(o => o.GUID == quest.GUID);
         if (runningQuest)
         {
             QuestDialogue hasDialogue = (QuestDialogue)quest.NextQuest.List.Find(o => o.QuestType == QuestType.Dialogue);
@@ -106,7 +109,7 @@ public class QuestManager : MonoBehaviour
     {
         runningQuest = null;
         finishQuest.QuestStatus = QuestStatus.Complete;
-        _currentQuest.Remove(finishQuest);
+        _questData.CurrentQuest.Remove(finishQuest);
         
         if (nextQuest != null)
         {
@@ -115,16 +118,16 @@ public class QuestManager : MonoBehaviour
                 nextQuest.List[i].QuestStatus = QuestStatus.Running;
                 if (nextQuest.List[i].QuestType == QuestType.DefaultDialogue)
                 {
-                    _defaultDialogue.Add((QuestDialogue)nextQuest.List[i]);
-                    QuestDialogue hasDefaultDialogue = _defaultDialogue.Find(o => o.CharacterID == finishQuest.CharacterID);
+                    _questData.DefaultDialogue.Add((QuestDialogue)nextQuest.List[i]);
+                    QuestDialogue hasDefaultDialogue = _questData.DefaultDialogue.Find(o => o.CharacterID == finishQuest.CharacterID);
                     if (hasDefaultDialogue)
                     {
                         hasDefaultDialogue.QuestStatus = QuestStatus.Complete;
-                        _defaultDialogue.Remove(_defaultDialogue.Find(o => o.CharacterID == finishQuest.CharacterID));
+                        _questData.DefaultDialogue.Remove(_questData.DefaultDialogue.Find(o => o.CharacterID == finishQuest.CharacterID));
                     }
                     return;
                 }
-                _currentQuest.Add(nextQuest.List[i]);
+                _questData.CurrentQuest.Add(nextQuest.List[i]);
             }
         }
 

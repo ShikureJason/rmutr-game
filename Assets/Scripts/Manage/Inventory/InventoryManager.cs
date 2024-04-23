@@ -12,13 +12,15 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private ItemEvent _giveItemEventListener = default;
     [SerializeField] private ItemEvent _addItemEventListener = default;
     [SerializeField] private ItemEvent _removeItemEventListener = default;
+    [SerializeField] private VoidEvent _initializeManageEventListener = default;
 
     private void OnEnable()
     {
         //_equipItemEventListener.OnEventRaised += EquipItemEventRaised;
         _addItemEventListener.OnEventRaised += AddItem;
-       // _removeItemEventListener.OnEventRaised += RemoveItem;
+        // _removeItemEventListener.OnEventRaised += RemoveItem;
         //_giveItemEventListener.OnEventRaised += RemoveItem;
+        _initializeManageEventListener.OnEventRaised += Initialize;
     }
 
     private void OnDisable()
@@ -27,6 +29,12 @@ public class InventoryManager : MonoBehaviour
         _addItemEventListener.OnEventRaised -= AddItem;
         //_removeItemEventListener.OnEventRaised -= RemoveItem;
         //_giveItemEventListener.OnEventRaised = RemoveItem;
+        _initializeManageEventListener.OnEventRaised -= Initialize;
+    }
+
+    private void Initialize()
+    {
+        _currentInventory.Initialize();
     }
 
     private void AddItemWithUIUpdate(ItemSO item)
