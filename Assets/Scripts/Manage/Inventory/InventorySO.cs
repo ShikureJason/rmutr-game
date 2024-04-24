@@ -12,11 +12,8 @@ public class InventorySO : BaseScriptableObject
 
     public void Initialize()
     {
-        if (_items == null)
-        {
-            _items = new List<ItemStack>();
-        }
         _items.Clear();
+        _defaultItems.Clear();
         foreach (ItemStack item in _defaultItems)
         {
             _items.Add(new ItemStack(item));

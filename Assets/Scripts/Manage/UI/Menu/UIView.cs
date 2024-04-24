@@ -25,6 +25,7 @@ public class UIView
     /// <param name="topElement">The topmost VisualElement in the UXML hierarchy.</param>
     public UIView(VisualElement topElement)
     {
+        Debug.Log(topElement);
         m_TopElement = topElement ?? throw new ArgumentNullException(nameof(topElement));
         Initialize();
     }

@@ -31,7 +31,6 @@ public class InventoryManager : MonoBehaviour
         //_giveItemEventListener.OnEventRaised = RemoveItem;
         _initializeManageEventListener.OnEventRaised -= Initialize;
     }
-
     private void Initialize()
     {
         _currentInventory.Initialize();

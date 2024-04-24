@@ -1,14 +1,14 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/USS/Button.uss?fileID=7433441132597879392&amp;guid=189d90e42b79cb04da2639898eb78bed&amp;type=3#Button" />
-    <ui:VisualElement name="bg_main_menu" style="min-width: auto; justify-content: center; align-items: center; max-height: none; height: 100%; position: relative; width: 100%; min-height: 200px;">
-        <ui:Button display-tooltip-when-elided="true" name="Button_setting" class="button_main_manu" style="background-image: none; align-items: center; justify-content: center; margin-bottom: 0; margin-right: 0; margin-left: 0;">
-            <ui:Label text="ตั้งค่า" display-tooltip-when-elided="true" name="label_setting" style="font-size: 35px;" />
+    <ui:VisualElement name="main_menu" style="min-width: auto; justify-content: center; align-items: center; max-height: none; height: 100%; position: relative; width: 100%; min-height: 200px; display: flex;">
+        <ui:Button display-tooltip-when-elided="true" name="button_setting" class="button_main_manu" style="background-image: none; align-items: center; justify-content: center; margin-bottom: 0; margin-right: 0; margin-left: 0; display: flex;">
+            <ui:Label text="#setting" display-tooltip-when-elided="true" name="label_setting" style="font-size: 35px;" />
         </ui:Button>
-        <ui:Button display-tooltip-when-elided="true" name="Button_exit" class="button_main_manu" style="background-image: none; align-items: center; justify-content: center; margin-bottom: 0; margin-right: 0; margin-left: 0;">
-            <ui:Label text="ออกจากเกม" display-tooltip-when-elided="true" name="label_exit" style="font-size: 35px;" />
+        <ui:Button display-tooltip-when-elided="true" name="button_exit" class="button_main_manu" style="background-image: none; align-items: center; justify-content: center; margin-bottom: 0; margin-right: 0; margin-left: 0;">
+            <ui:Label text="#exit" display-tooltip-when-elided="true" name="label_exit" style="font-size: 35px;" />
         </ui:Button>
-        <ui:Button display-tooltip-when-elided="true" name="Button_start" class="button_main_manu" style="margin-left: 0; margin-right: 0; margin-top: 30px; margin-bottom: 0; background-image: none; transition-duration: 0.1s; align-items: center; justify-content: center;">
-            <ui:Label text="เริ่มเกม" display-tooltip-when-elided="true" name="label_start" style="font-size: 35px;" />
+        <ui:Button display-tooltip-when-elided="true" name="button_new_game" class="button_main_manu" style="margin-left: 0; margin-right: 0; margin-top: 30px; margin-bottom: 0; background-image: none; transition-duration: 0.1s; align-items: center; justify-content: center; display: flex; visibility: visible;">
+            <ui:Label text="#newgame" display-tooltip-when-elided="true" name="label_start" style="font-size: 35px;" />
         </ui:Button>
     </ui:VisualElement>
 </ui:UXML>
