@@ -154,7 +154,7 @@ public class Setting : MonoBehaviour
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[localindex];
         QualitySettings.SetQualityLevel(qualityindex);
         Screen.SetResolution(resolutions[resolutionindex].width, resolutions[resolutionindex].height, isfullscreen);
-        Screen.SetResolution(resolutions[currentresolutionindex].width, resolutions[currentresolutionindex].height, isfullscreen);
+        //Screen.SetResolution(resolutions[currentresolutionindex].width, resolutions[currentresolutionindex].height, isfullscreen);
         _acceptButton.interactable = false;
     }
 }

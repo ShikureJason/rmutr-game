@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -25,7 +23,6 @@ public class UIView
     /// <param name="topElement">The topmost VisualElement in the UXML hierarchy.</param>
     public UIView(VisualElement topElement)
     {
-        Debug.Log(topElement);
         m_TopElement = topElement ?? throw new ArgumentNullException(nameof(topElement));
         Initialize();
     }
@@ -38,6 +35,7 @@ public class UIView
         }
         SetVisualElements();
         RegisterButtonCallbacks();
+        SetInitialize();
     }
 
     // Sets up the VisualElements for the UI. Override to customize.
@@ -48,6 +46,11 @@ public class UIView
 
     // Registers callbacks for buttons in the UI. Override to customize.
     protected virtual void RegisterButtonCallbacks()
+    {
+
+    }
+
+    protected virtual void SetInitialize()
     {
 
     }

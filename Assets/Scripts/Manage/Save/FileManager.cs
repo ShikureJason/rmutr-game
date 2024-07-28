@@ -32,22 +32,52 @@ public class FileManager
         }
     }
 
+    public static string[] GetFileNames(string directoryPath, string fileExtension)
+    {
+        try
+        {
+            var fullPath = Path.Combine(Application.persistentDataPath, directoryPath);
+            if (Directory.Exists(fullPath))
+            {
+                string[] fileNames = Directory.GetFiles(fullPath, fileExtension);
+                for (int i = 0; i < fileNames.Length; i++)
+                {
+                    fileNames[i] = Path.GetFileName(fileNames[i]);
+                }
+
+                return fileNames;
+            }
+            else
+            {
+                Console.WriteLine("Directory does not exist.");
+                return null;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("An error occurred: " + ex.Message);
+            return null;
+        }
+    }
+
     public static bool LoadFromFile(string fileName, out string result)
     {
         var fullPath = Path.Combine(Application.persistentDataPath, fileName);
         if (!File.Exists(fullPath))
         {
-            File.WriteAllText(fullPath, "");
+            result = null;
+            return false;
         }
         try
         {
+            Debug.Log(fullPath);
             result = File.ReadAllText(fullPath);
             return !string.IsNullOrEmpty(result);
         }
         catch (Exception ex)
         {
             Debug.LogError($"Failed to read from {fullPath} with exception {ex}");
-            result = "";
+            result = null;
             return false;
         }
     }

@@ -5,18 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Inventory", menuName = "Inventory/Inventory")]
 public class InventorySO : BaseScriptableObject
 {
-    [SerializeField] private List<ItemStack> _items = new List<ItemStack>();
+    [SerializeField] private Dictionary<string, ItemStack> _items = new Dictionary<string, ItemStack>();
     [SerializeField] private List<ItemStack> _defaultItems = new List<ItemStack>();
 
-    public List<ItemStack> Items => _items;
+    public Dictionary<string, ItemStack> Items => _items;
 
     public void Initialize()
     {
         _items.Clear();
-        _defaultItems.Clear();
         foreach (ItemStack item in _defaultItems)
         {
-            _items.Add(new ItemStack(item));
+            _items.Add(Guid.NewGuid().ToString() ,new ItemStack(item));
         }
     }
 
@@ -25,12 +24,24 @@ public class InventorySO : BaseScriptableObject
         if (count <= 0)
             return;
 
+        ItemStack currentItem = null;
+        string currentKey = null;
 
-        ItemStack currentItem = _items.Find(o => o.Item.Equals(item));
+        foreach (var keyValue in _items)
+        {
+            if (keyValue.Value.Item.Equals(item))
+            {
+                currentItem = keyValue.Value;
+                currentKey = keyValue.Key;
+                break;
+            }
+        }
+
         if (currentItem == null)
         {
             currentItem = new ItemStack(item, 0);
-            _items.Add(currentItem);
+            currentKey = Guid.NewGuid().ToString();
+            _items.Add(currentKey, currentItem);
         }
 
         while (count > 0)
@@ -42,7 +53,8 @@ public class InventorySO : BaseScriptableObject
             if (count > 0)
             {
                 currentItem = new ItemStack(item, Math.Min(count, item.MaxStack));
-                _items.Add(currentItem);
+                currentKey = Guid.NewGuid().ToString();
+                _items.Add(currentKey, currentItem);
                 count -= Math.Min(count, item.MaxStack);
             }
         }
@@ -53,16 +65,16 @@ public class InventorySO : BaseScriptableObject
         if (count <= 0)
             return;
 
-        for (int i = 0; i < _items.Count; i++)
+        foreach (var key in new List<string>(_items.Keys))
         {
-            ItemStack currentItemStack = _items[i];
+            ItemStack currentItemStack = _items[key];
 
             if (currentItemStack.Item == item)
             {
                 currentItemStack.Amount -= count;
 
                 if (currentItemStack.Amount <= 0)
-                    _items.Remove(currentItemStack);
+                    _items.Remove(key);
 
                 return;
             }
@@ -71,9 +83,9 @@ public class InventorySO : BaseScriptableObject
 
     public bool Contains(ItemSO item)
     {
-        for (int i = 0; i < _items.Count; i++)
+        foreach (var keyValue in _items)
         {
-            if (item == _items[i].Item)
+            if (item == keyValue.Value.Item)
             {
                 return true;
             }
@@ -83,15 +95,27 @@ public class InventorySO : BaseScriptableObject
 
     public int Count(ItemSO item)
     {
-        for (int i = 0; i < _items.Count; i++)
+        int totalCount = 0;
+
+        foreach (var keyValue in _items)
         {
-            ItemStack currentItemStack = _items[i];
-            if (item == currentItemStack.Item)
+            if (item == keyValue.Value.Item)
             {
-                return currentItemStack.Amount;
+                totalCount += keyValue.Value.Amount;
             }
         }
 
-        return 0;
+        return totalCount;
+    }
+
+    public ItemStack GetItemByGuid(string guid)
+    {
+        if (_items.ContainsKey(guid))
+        {
+            return _items[guid];
+        }
+
+        return null;
     }
 }
+

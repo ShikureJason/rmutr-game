@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 
 public class MapController : MonoBehaviour
 {
+    public RectTransform minimapArea;
     [Header("Event Listenner")]
     [SerializeField] private VoidEvent _playerHasSpawnEventListenner = default;
     private GameObject Player;
@@ -16,32 +17,6 @@ public class MapController : MonoBehaviour
     public float miniMultiplyer = 1f;
     [Range(1, 15)]
     public float fullMultiplyer = 1f;
-    private bool _mapFaded;
-    public bool MapFaded
-    {
-        get => _mapFaded;
-
-        set
-        {
-            //Do nothing if the value is the same
-            if (_mapFaded == value)
-            {
-                return;
-            }
-
-            //Calculate the end value of the background img tint color
-            Color end = !_mapFaded ? Color.white.WithAlpha(.5f) : Color.white;
-
-            //Animate the background tint color.
-            //Start value: Whatever the current style is set to
-            //End value: Alpha is either 50% or 100%, depending on if the player is moving and if the window is open
-            //Duration: 500 MS
-            //Action: Applies current value to the backgroundImageTintColor
-            _mapImage.experimental.animation.Start(_mapImage.style.unityBackgroundImageTintColor.value, end, 500, (elm, val) => { elm.style.unityBackgroundImageTintColor = val; });
-
-            _mapFaded = value;
-        }
-    }
 
     private void OnEnable()
     {
@@ -66,31 +41,13 @@ public class MapController : MonoBehaviour
     private void setupTranformPlayer()
     {
         Player = GameObject.FindWithTag("Player");
+        _playerRepresentation.style.left = minimapArea.rect.width / 2;
+        _playerRepresentation.style.top = minimapArea.rect.height / 2;
     }
 
     void LateUpdate()
     {
-        Debug.Log(_playerRepresentation);
-        //Rotate and move the player icon based on the players movement
-        var multiplyer = miniMultiplyer;
-        Debug.Log(_mapImage.style.translate);
-        _playerRepresentation.style.translate = new Translate(Player.transform.position.x * multiplyer, Player.transform.position.z * -multiplyer, 0);
-        _playerRepresentation.style.rotate = new Rotate(new Angle(Player.transform.rotation.eulerAngles.y));
-
-        //Alter the faded value if the map is open and the player is moving
-        //MapFaded = IsMapOpen && PlayerController.Instance.IsMoving;
-
-        //Move the mini map 
-        //Calculate the width/height bounds for the map image
-        var clampWidth = _mapImage.worldBound.width / 2 - _mapContainer.worldBound.width / 2;
-        var clampHeight = _mapImage.worldBound.height / 2 - _mapContainer.worldBound.height / 2;
-
-        //Clamp the bounds so that the map doesn't scroll past the playable area (i.e. the map image)
-        var xPos = Mathf.Clamp(Player.transform.position.x * -miniMultiplyer, -clampWidth, clampWidth);
-        var yPos = Mathf.Clamp(Player.transform.position.z * miniMultiplyer, -clampHeight, clampHeight);
-
-        //Move the map image
-        _mapImage.style.translate = new Translate(xPos, yPos, 0);
+        UpdatePlayerIconPosition();
     }
 
     /// <summary>
@@ -103,6 +60,26 @@ public class MapController : MonoBehaviour
     /// Toggle between full and mini mode
     /// </summary>
     /// <param name="on">Should the map be in full mode?</param>
+    /// 
+    private void UpdatePlayerIconPosition()
+    {
+        Vector2 minimapPosition = WorldToMinimapPosition(Player.transform.position);
+        _mapImage.style.left = -minimapPosition.x + (minimapArea.rect.width / 2);
+        _mapImage.style.top = -minimapPosition.y + (minimapArea.rect.height / 2);
+    }
+
+    private Vector2 WorldToMinimapPosition(Vector3 worldPosition)
+    {
+        float minimapWidth = _mapImage.resolvedStyle.width;
+        float minimapHeight = _mapImage.resolvedStyle.height;
+        float worldWidth = 100; 
+        float worldHeight = 100;
+
+        float x = (worldPosition.x / worldWidth) * minimapWidth;
+        float y = (worldPosition.z / worldHeight) * minimapHeight;
+
+        return new Vector2(x, y);
+    }
     private void ToggleMap(bool on)
     {
         _root.EnableInClassList("root-container-mini", !on);

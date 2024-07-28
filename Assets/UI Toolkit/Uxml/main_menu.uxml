@@ -1,14 +1,77 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/USS/Button.uss?fileID=7433441132597879392&amp;guid=189d90e42b79cb04da2639898eb78bed&amp;type=3#Button" />
+    <Style src="project://database/Assets/UI%20Toolkit/USS/Test/SaveSlot.uss?fileID=7433441132597879392&amp;guid=4cc447c5d8d730845b7241c21c35e10f&amp;type=3#SaveSlot" />
     <ui:VisualElement name="main_menu" style="min-width: auto; justify-content: center; align-items: center; max-height: none; height: 100%; position: relative; width: 100%; min-height: 200px; display: flex;">
-        <ui:Button display-tooltip-when-elided="true" name="button_setting" class="button_main_manu" style="background-image: none; align-items: center; justify-content: center; margin-bottom: 0; margin-right: 0; margin-left: 0; display: flex;">
-            <ui:Label text="#setting" display-tooltip-when-elided="true" name="label_setting" style="font-size: 35px;" />
+        <ui:Button display-tooltip-when-elided="true" name="button_new_game" class="button_main_menu" style="margin-left: 0; margin-right: 0; margin-top: 30px; margin-bottom: 0; background-image: none; transition-duration: 0.1s; align-items: center; justify-content: center; display: flex; visibility: visible;">
+            <ui:Label text="#menu_newgame" display-tooltip-when-elided="true" name="label_start" style="font-size: 35px;" />
         </ui:Button>
-        <ui:Button display-tooltip-when-elided="true" name="button_exit" class="button_main_manu" style="background-image: none; align-items: center; justify-content: center; margin-bottom: 0; margin-right: 0; margin-left: 0;">
-            <ui:Label text="#exit" display-tooltip-when-elided="true" name="label_exit" style="font-size: 35px;" />
+        <ui:Button display-tooltip-when-elided="true" name="button_setting" class="button_main_menu" style="background-image: none; align-items: center; justify-content: center; margin-bottom: 0; margin-right: 0; margin-left: 0; display: flex;">
+            <ui:Label text="#menu_setting" display-tooltip-when-elided="true" name="label_setting" style="font-size: 35px;" />
         </ui:Button>
-        <ui:Button display-tooltip-when-elided="true" name="button_new_game" class="button_main_manu" style="margin-left: 0; margin-right: 0; margin-top: 30px; margin-bottom: 0; background-image: none; transition-duration: 0.1s; align-items: center; justify-content: center; display: flex; visibility: visible;">
-            <ui:Label text="#newgame" display-tooltip-when-elided="true" name="label_start" style="font-size: 35px;" />
+        <ui:Button display-tooltip-when-elided="true" name="button_exit" class="button_main_menu" style="background-image: none; align-items: center; justify-content: center; margin-bottom: 0; margin-right: 0; margin-left: 0;">
+            <ui:Label text="#menu_exit" display-tooltip-when-elided="true" name="label_exit" style="font-size: 35px;" />
         </ui:Button>
+        <ui:Button text="เทส" display-tooltip-when-elided="true" name="TestAA" style="height: 93px; width: 450px; font-size: 76px;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="setting" style="height: 1080px; justify-content: center; background-color: rgba(0, 0, 0, 0); display: none; width: 1920px; align-items: center; visibility: visible;">
+        <ui:Label text="#setting_title" display-tooltip-when-elided="true" name="text_setting" style="font-size: 50px; -unity-text-align: upper-center; align-items: center; margin-top: 0; margin-bottom: 0; top: auto; bottom: 100px;" />
+        <ui:VisualElement name="language" class="setting" style="justify-content: space-between; width: 800px;">
+            <ui:Label text="#setting_lanuage" display-tooltip-when-elided="true" name="label_language" class="text_setting" style="align-items: flex-start;" />
+            <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" name="dropdown_language" class="choice" style="justify-content: flex-end; color: rgb(255, 255, 255);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="resolution" class="setting" style="width: 800px; justify-content: space-between;">
+            <ui:Label text="#setting_resolution" display-tooltip-when-elided="true" class="text_setting" style="align-items: flex-start;" />
+            <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" name="dropdown_resolution" class="choice" />
+        </ui:VisualElement>
+        <ui:VisualElement name="full_screen" style="flex-direction: row; height: 40px; width: 784px; align-items: center; justify-content: flex-end; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; overflow: visible; visibility: visible; position: relative; flex-grow: 0;">
+            <ui:Label text="#setting_full_screen" display-tooltip-when-elided="true" name="label_full_screen" style="left: 0; font-size: 20px; justify-content: flex-start; align-items: flex-start; -unity-text-align: middle-center; width: 143px; flex-direction: column; padding-left: 0; padding-right: 0;" />
+            <ui:Toggle name="toggle_full_screen" value="false" style="left: 0; width: 30px; height: 30px; justify-content: center; align-items: center; scale: 2 2;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="quality_graphic" class="setting" style="justify-content: space-between; width: 800px;">
+            <ui:Label text="#setting_quality" display-tooltip-when-elided="true" name="label_quaility_graphic" class="text_setting" style="font-size: 12px; -unity-text-align: upper-left; padding-left: 1px; padding-right: 2px; padding-top: 0; padding-bottom: 0;" />
+            <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" name="dropdown_quaility_graphic" class="choice" />
+        </ui:VisualElement>
+        <ui:VisualElement name="sound_container" style="top: auto;">
+            <ui:VisualElement name="master_container" style="flex-direction: row; width: 800px; justify-content: space-between;">
+                <ui:Label text="#setting_master_sound" display-tooltip-when-elided="true" name="label_master" class="text_setting" />
+                <ui:Slider picking-mode="Ignore" value="42" high-value="1" name="slider_master" style="height: 50px; width: 300px; align-items: center; left: auto;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="music_container" style="flex-direction: row; width: 800px; justify-content: space-between;">
+                <ui:Label text="#setting_music_sound" display-tooltip-when-elided="true" name="label_music" class="text_setting" />
+                <ui:Slider picking-mode="Ignore" value="42" high-value="1" name="slider_music" style="width: 300px; height: 50px; align-items: center; left: auto;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="sfx_container" style="flex-direction: row; width: 800px; justify-content: space-between;">
+                <ui:Label text="#setting_sfx_sound" display-tooltip-when-elided="true" name="label_sfx" class="text_setting" />
+                <ui:Slider picking-mode="Ignore" value="42" high-value="1" name="slider_sfx" style="width: 300px; height: 50px; left: auto; align-items: center;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="setting_button_container" style="align-items: center; flex-direction: row; top: auto; width: 795px; justify-content: center;">
+            <ui:Button display-tooltip-when-elided="true" name="button_apply" text="#apply" class="button_main_menu" style="right: 0; background-image: none; background-color: rgb(255, 255, 255); border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0); border-top-left-radius: 30px; border-bottom-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; display: flex; color: rgb(0, 0, 0); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+            <ui:Button display-tooltip-when-elided="true" name="button_back" text="#back" class="button_main_menu" style="left: 20px; border-top-left-radius: 30px; border-bottom-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; background-image: none; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="chose_slot_save" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; display: none; justify-content: flex-end; overflow: visible; width: 100%; height: 100%;">
+        <ui:VisualElement name="save_slot" style="position: absolute; width: 100%; height: 100%; border-left-width: 23px; border-right-width: 23px; border-top-width: 23px; border-bottom-width: 23px;">
+            <ui:VisualElement name="save_slot_one" class="saveSlot-Slot" style="background-color: rgba(0, 0, 0, 0.46); height: 100px; display: none; visibility: visible; overflow: visible;">
+                <ui:VisualElement name="save_slot_empty" class="saveSlot-SaveSlotContainer" style="display: none;">
+                    <ui:Label text="#saveslot_empty" display-tooltip-when-elided="true" enable-rich-text="true" name="save_slot_empty_label" class="saveslot-text-EmptySaveSlot" />
+                </ui:VisualElement>
+                <ui:VisualElement name="save_slot_data" class="saveSlot-SaveSlotContainer">
+                    <ui:Label text="#save_name" display-tooltip-when-elided="true" name="save_name" class="saveSlot-text-saveName" style="position: absolute; top: 11px; left: 30px;" />
+                    <ui:Label text="#save_time_played" display-tooltip-when-elided="true" name="save_time_played" style="left: 859px; top: 66px; position: absolute;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="create_name_save" style="overflow: visible; height: 100%; justify-content: center; display: none; position: absolute; top: auto; left: auto; width: 100%; bottom: auto;">
+            <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" name="textfield_create_slot_name" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="button_slot_name_comfirm" style="justify-content: flex-start; align-items: stretch;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="save_slot_test" style="opacity: 1; overflow: hidden; display: none; visibility: hidden;">
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="button_slot_two" style="height: 20px;" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="button_slot_three" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="button_slot_four" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="button_slot_five" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="button_slot_one" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

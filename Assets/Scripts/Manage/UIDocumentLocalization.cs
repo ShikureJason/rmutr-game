@@ -1,3 +1,16 @@
+﻿/// void* src = https://gist.github.com/andrew-raphael-lukasik/72a4d3d14dd547a1d61ae9dc4c4513da
+///
+/// Copyright (C) 2022 Andrzej Rafał Łukasik (also known as: Andrew Raphael Lukasik)
+///
+/// This program is free software: you can redistribute it and/or modify
+/// it under the terms of the GNU General Public License as published by
+/// the Free Software Foundation, version 3 of the License.
+///
+/// This program is distributed in the hope that it will be useful,
+/// but WITHOUT ANY WARRANTY; without even the implied warranty of
+/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+/// See the GNU General Public License for details https://www.gnu.org/licenses/
+///
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.Localization;
@@ -9,10 +22,14 @@ using UnityEditor;
 using UnityEditor.UIElements;
 #endif
 
+// NOTE: this class assumes that you designate StringTable keys in label fields (as seen in Label, Button, etc)
+// and start them all with '#' char (so other labels will be left be)
+// example: https://i.imgur.com/H5RUIej.gif
 
 [HelpURL("https://gist.github.com/andrew-raphael-lukasik/72a4d3d14dd547a1d61ae9dc4c4513da")]
 [DisallowMultipleComponent]
 [RequireComponent(typeof(UIDocument))]
+[DefaultExecutionOrder(100)]
 public class UIDocumentLocalization : MonoBehaviour
 {
 
@@ -22,6 +39,7 @@ public class UIDocumentLocalization : MonoBehaviour
     /// <summary> Executed after hierarchy is cloned fresh and translated. </summary>
     public event System.Action<VisualElement> onCompleted = (VisualElement root) =>
     {
+        Debug.LogError("Ui Trabs");
 #if DEBUG
         Debug.Log($"{nameof(UIDocumentLocalization)}: {nameof(UIDocument)} translated");
 #endif

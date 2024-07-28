@@ -8,7 +8,7 @@ using UnityEngine;
 public class AudioCueSO : ScriptableObject
 {
 	public bool looping = false;
-	[SerializeField] private AudioClipsGroup[] _audioClipGroups = default;
+    [SerializeField] private AudioClipsGroup[] _audioClipGroups = default;
 
 	public AudioClip[] GetClips()
 	{

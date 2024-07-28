@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
@@ -8,49 +10,58 @@ public class InitializeStartScene : MonoBehaviour
     [SerializeField] private SceneSO _localScene;
 #if UNITY_EDITOR
     [SerializeField] private SceneSO _gameManageScene;
-
+#endif
     [Header("Event Emitter")]
     [SerializeField] private SceneEvent _loadSceneEventEditorEmitter;
-#endif
-    [SerializeField] private VoidEvent _initializeStartSceneHasLoadedEmitter;
-    [SerializeField] private SceneTypeEvent _switchInputEventEmitter;
+    [SerializeField] private VoidEvent _initializeStartSceneEmitter;
+    [SerializeField] private VoidEvent _initializeStartSceneHasLoadedFinshEmitter;
 
     [Header("Event Listener")]
-    [SerializeField] private VoidEvent _sceneHasLoadedEventListener = default;
+    [SerializeField] private VoidEvent _startInitlizeSceneEventEmitter;
 
-    private bool _sceneManageHasLoaded = false;
 
     private void OnEnable()
     {
-        _sceneHasLoadedEventListener.OnEventRaised += initializedStart;
+        _startInitlizeSceneEventEmitter.OnEventRaised += initializedStart;
     }
 
     private void OnDisable()
     {
-        _sceneHasLoadedEventListener.OnEventRaised -= initializedStart;
+        _startInitlizeSceneEventEmitter.OnEventRaised -= initializedStart;
     }
 
 #if UNITY_EDITOR
-    private void Start()
+
+    public IEnumerator Start()
     {
-        _gameManageScene.Scene.LoadSceneAsync(LoadSceneMode.Additive, true).Completed += LoadSceneEvent;
+        var loc = Addressables.LoadResourceLocationsAsync(_gameManageScene.Scene);
+        yield return loc;
+        var result = loc.Result;
+        if(!SceneManager.GetSceneByPath(result[0].InternalId).isLoaded)
+        {
+            _gameManageScene.Scene.LoadSceneAsync(LoadSceneMode.Additive, true).Completed += LoadSceneEvent;
+        }
     }
 #endif
 
     private void initializedStart()
     {
-        _initializeStartSceneHasLoadedEmitter.RaiseEvent();
-        _switchInputEventEmitter.RaiseEvent(_localScene.SceneType);
+        Debug.LogError("Scene Initilize Finish");
+        bool tt = _localScene.SceneType != SceneType.Menu;
+        Debug.Log("Scene type = " + tt);
+        if (_localScene.SceneType != SceneType.Menu)
+        {
+            Debug.Log("TTTTTTTTTTTT");
+            _initializeStartSceneEmitter.RaiseEvent();
+        }
+        
+        _initializeStartSceneHasLoadedFinshEmitter.RaiseEvent();
     }
 
     private void LoadSceneEvent(AsyncOperationHandle<SceneInstance> obj)
     {
+        Debug.LogError("Scene Initilize Load");
         _loadSceneEventEditorEmitter.RaiseEvent(_localScene);
-    }
-
-    private void onStart()
-    {
-        _switchInputEventEmitter.RaiseEvent(_localScene.SceneType);
     }
 
 }

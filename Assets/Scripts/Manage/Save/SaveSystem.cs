@@ -2,58 +2,23 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SaveSystem : MonoBehaviour
+public class SaveSystem
 {
-    [SerializeField] private SaveSetting _setting = default;
-    [SerializeField] private InventorySO _inventory = default;
-    [SerializeField] private QuestDataSO _questData = default;
-
-    [Header("Event Emitter")]
-    [SerializeField] private VoidEvent _resetAllDataEmitter = default;
-
-    [Header("Evnet Listener")]
-    [SerializeField] private VoidEvent _startNewGameDataListener = default;
-
-    [Header("Data")]
-
-    public SaveData[] SaveData = new SaveData[5];
-
-    private void OnEnable()
-    {
-        _startNewGameDataListener.OnEventRaised += SetNewData;
-    }
-
-    private void OnDisable()
-    {
-        _startNewGameDataListener.OnEventRaised -= SetNewData;
-    }
-    /*private void WriteEmtyFile()
-    {
-        try
-        {
-            FileManager.WriteFile(_saveFileName + ".dat", "");
-            Debug.Log("WriteFile");
-        }
-        catch (Exception ex)
-        {
-            Debug.Log($"Can't write file with exception {ex}");
-        }
-    }*/
-
     private bool createNewSaveData(int slot, string saveName)
     {
-        SaveData[slot] = new SaveData(saveName);
-        if(HasSaveData(slot))
+        if (GameData.Instance.SaveDataList.Count < 5 && GameData.Instance.SaveDataList[slot] == null)
         {
+            GameData.Instance.SaveDataList[slot] = new SaveData(saveName);
             return true;
         }
         return false;
     }
 
-    public bool HasSaveData(int slot)
+    internal static bool SaveData(int slot)
     {
         try
         {
+            SaveData Save = GameData.Instance.SaveDataList[slot];
             //SaveData.QuestListData = _questListData;
             GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
 
@@ -64,37 +29,39 @@ public class SaveSystem : MonoBehaviour
                 //SaveData.Position = playerObject.transform.position;
             }
 
-            foreach (QuestList quest in _questData.QuestList)
+            foreach (QuestList quest in GameData.Instance.QuestData.QuestList)
             {
                 List<SerializedQuestData> data = new List<SerializedQuestData>();
                 foreach(QuestBaseSO baseQuest in quest.List)
                 {
                     data.Add(new SerializedQuestData(baseQuest.GUID, baseQuest.QuestStatus));
                 }
-                SaveData[slot].QuestData.Add(new SerializedQuestList(quest.GUID, data));
+                Save.QuestData.Add(new SerializedQuestList(quest.GUID, data));
             }
 
-            foreach (QuestBaseSO quest in _questData.CurrentQuest)
+            foreach (QuestBaseSO quest in GameData.Instance.QuestData.CurrentQuest)
             {
-                SaveData[slot].CurrentQuestData.Add(new SerializedQuestData(quest.GUID, quest.QuestStatus));
+                //Debug.Log("Quest = " + quest.GUID);
+                Debug.Log("Quse Count = " + Save.CurrentQuestData.Count);
+                Save.CurrentQuestData.Add(new SerializedQuestData(quest.GUID, quest.QuestStatus));
             }
 
-            foreach (QuestBaseSO quest in _questData.DefaultDialogue)
+            foreach (QuestBaseSO quest in GameData.Instance.QuestData.DefaultDialogue)
             {
-                SaveData[slot].CurrentDefaultDialogue.Add(new SerializedQuestData(quest.GUID, quest.QuestStatus)); 
+                Save.CurrentDefaultDialogue.Add(new SerializedQuestData(quest.GUID, quest.QuestStatus)); 
             }
 
-            foreach (ItemStack item in _inventory.Items)
+            foreach (KeyValuePair<string, ItemStack> item in GameData.Instance.InventoryData.Items)
             {
-                SaveData[slot].ItemData.Add(new SerializedItem(item.GUID, item.Item.Id, item.Amount));
+                Save.ItemData.Add(new SerializedItem(item.Key, item.Value));
             }
 
 
-            if (FileManager.MoveFile( SaveData[slot].GUID + ".dat", SaveData[slot].GUID + ".dat.bak"))
+            if (FileManager.MoveFile( Save.SaveName + ".dat", Save.SaveName + ".dat.bak"))
             {
-                if (FileManager.WriteFile(SaveData[slot].GUID + ".dat", SaveData[0].ToJson()))
+                if (FileManager.WriteFile(Save.SaveName + ".dat", Save.ToJson()))
                 {
-                    if (FileManager.WriteFile("Setting.Json", _setting.ToJson()))
+                    if (FileManager.WriteFile("Setting.Json", GameData.Instance.SettingData.ToJson()))
                     {
                         return true;
                     }
@@ -110,27 +77,44 @@ public class SaveSystem : MonoBehaviour
 
     }
 
-    public void LoadSettingData()
+    internal static bool SaveSettingData()
+    {
+        try
+        {
+            if (FileManager.WriteFile("Setting.Json", GameData.Instance.SettingData.ToJson()))
+            {
+                return true;
+            }
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogException(ex);
+            return false;
+        }
+    }
+
+    public static bool LoadSettingData()
     {
         try
         {
             if (FileManager.LoadFromFile("Setting.Json", out string result))
             {
-                _setting.LoadFromJson(result);
-            } else
-            {
-                //_setting  ;
+                GameData.Instance.SettingData.LoadFromJson(result);
+                return true;
             }
+            return false;
         }
-        catch
+        catch (Exception ex)
         {
-
+            Debug.LogException(ex);
+            return false;
         }
     }
 
     public void SetNewData()
     {
-        _resetAllDataEmitter.RaiseEvent();
+        //_resetAllDataEmitter.RaiseEvent();
         //HasSaveData();
     }
 }

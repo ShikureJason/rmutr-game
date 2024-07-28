@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class ItemStack
 {
-    public readonly string GUID = Guid.NewGuid().ToString();
+    //public readonly string GUID = Guid.NewGuid().ToString();
     [SerializeField] private ItemSO _item;
 
     public ItemSO Item => _item;

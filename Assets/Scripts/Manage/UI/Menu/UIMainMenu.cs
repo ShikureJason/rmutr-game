@@ -1,71 +1,84 @@
-using Unity.VisualScripting;
+using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEngine.InputManagerEntry;
 
 public class UIMainMenu : MonoBehaviour
 {
-    UIView mainMenuView;
+    [Header("Evemt Listener")]
+    [SerializeField] private VoidEvent _startNextSceneEmitter = default;
+    private UIView mainMenuView;
+    private UIView settingMenuView;
+    private UIView choseSaveSlotView;
 
-    //test
-
-    Button newgameButton;
-
-    public const string MenuName = "Menu";
+    private const string mainMenuName = "main_menu";
+    private const string settingMenuName = "setting";
+    private const string choseSaveSlotName = "chose_slot_save";
 
     private void OnEnable()
     {
-        GetComponent<UIDocumentLocalization>().onCompleted += Bind;
-        
+        GetComponent<UIDocumentLocalization>().onCompleted += setupViews;
     }
 
     private void OnDisable()
     {
-        GetComponent<UIDocumentLocalization>().onCompleted -= Bind;
-    }
+        GetComponent<UIDocumentLocalization>().onCompleted -= setupViews;
+        MenuView.NewGameEvent.OnEventRaised -= startNewgame;
+        MenuView.OpenSettingEvent.OnEventRaised -= openSetting;
+        MenuView.ExitEvent.OnEventRaised -= onExit;
+        SettingView.CloseSetting.OnEventRaised -= closeSettingMenu;
+        ChoseSaveSlotView.SelectSaveEvent.OnEventRaised -= createNewSaveSlot;
 
+    }
 
     private void Start()
     {
-        setupViews();
-        //_continuegameButton.SetActive(_saveData.HasSaveData());
+        //setupViews(GetComponent<UIDocument>().rootVisualElement);
+        //GetComponent<UIDocumentLocalization>().onCompleted += setupViews;
     }
 
-    private void setupViews()
+    private void setupViews(VisualElement root)
     {
-         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
-         /*VisualElement mainMenu = root.Q<VisualElement>("test");
-         if (mainMenu == null)
-         {
-             Debug.LogError("Cannot find main menu element.");
-             return;
-         }
+        Debug.LogError("Start UI");
+        mainMenuView = new MenuView(root.Q<VisualElement>(mainMenuName));
+        settingMenuView = new SettingView(root.Q<VisualElement>(settingMenuName));
+        choseSaveSlotView = new ChoseSaveSlotView(root.Q<VisualElement>(choseSaveSlotName));
 
-         newgameButton = mainMenu.Q<Button>("button");
-         if (newgameButton == null)
-         {
-             Debug.LogError("Cannot find new game button.");
-             return;
-         }
+        MenuView.NewGameEvent.OnEventRaised += startNewgame;
+        MenuView.OpenSettingEvent.OnEventRaised += openSetting;
+        MenuView.ExitEvent.OnEventRaised += onExit;
+        SettingView.CloseSetting.OnEventRaised += closeSettingMenu;
+        ChoseSaveSlotView.SelectSaveEvent.OnEventRaised += createNewSaveSlot;
 
-         newgameButton.RegisterCallback<ClickEvent>( ev => newGame());
-        VisualElement root = GetComponent<UIDocument>().rootVisualElement;*/
-
-        mainMenuView = new MenuView(root.Q<VisualElement>("main_menu"));
-        //mainMenuView.Show();
+        mainMenuView.Show();
     }
 
-    private void newGame()
+    private void startNewgame()
     {
-        Debug.Log("New game button clicked.");
-    }
-    public void SetActiveMainMenu(bool expression)
-    {
-        gameObject.SetActive(expression);
+        mainMenuView.Hide();
+        choseSaveSlotView.Show();
     }
 
-    void Bind(VisualElement root)
+    private void closeSettingMenu()
     {
+        settingMenuView.Hide();
+        mainMenuView.Show();
+    }
 
+    private void openSetting()
+    {
+        mainMenuView.Hide();
+        settingMenuView.Show();
+    }
+
+    private void onExit()
+    {
+        Application.Quit();
+    }
+
+    private void createNewSaveSlot(string name, int slot)
+    {
+        GameData.Instance.SelectSaveSlot(name, slot);
+        _startNextSceneEmitter.RaiseEvent();
     }
 }

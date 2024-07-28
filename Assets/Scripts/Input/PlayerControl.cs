@@ -80,6 +80,33 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ZoomMinimap"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa466a30-b306-4343-a708-d3e85498455e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""e42c1b59-c945-40df-b37c-68c078a77347"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseAndResume"",
+                    ""type"": ""Button"",
+                    ""id"": ""2b5f44ba-2c43-456c-af20-e680013c6af0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -192,6 +219,61 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""action"": ""Interract"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""ba59b366-c40c-47ec-9f43-e0a9e4170432"",
+                    ""path"": ""1DAxis(minValue=-5,maxValue=5,whichSideWins=1)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ZoomMinimap"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""1543ba2d-1c9a-4a9c-b9ae-468a9fe38de4"",
+                    ""path"": ""<Keyboard>/minus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ZoomMinimap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""e8828bfe-f747-4aa6-a107-d56153c88e45"",
+                    ""path"": ""<Keyboard>/equals"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ZoomMinimap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1704e78e-fa06-4c81-a6de-e609342ba883"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98871250-2f76-4d23-8157-769d2b5b69d6"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseAndResume"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -234,6 +316,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         m_GamePlay_ZoomCamera = m_GamePlay.FindAction("ZoomCamera", throwIfNotFound: true);
         m_GamePlay_Sprint = m_GamePlay.FindAction("Sprint", throwIfNotFound: true);
         m_GamePlay_Interract = m_GamePlay.FindAction("Interract", throwIfNotFound: true);
+        m_GamePlay_ZoomMinimap = m_GamePlay.FindAction("ZoomMinimap", throwIfNotFound: true);
+        m_GamePlay_Inventory = m_GamePlay.FindAction("Inventory", throwIfNotFound: true);
+        m_GamePlay_PauseAndResume = m_GamePlay.FindAction("PauseAndResume", throwIfNotFound: true);
         // Dialogue
         m_Dialogue = asset.FindActionMap("Dialogue", throwIfNotFound: true);
         m_Dialogue_NextDialogue = m_Dialogue.FindAction("NextDialogue", throwIfNotFound: true);
@@ -304,6 +389,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_ZoomCamera;
     private readonly InputAction m_GamePlay_Sprint;
     private readonly InputAction m_GamePlay_Interract;
+    private readonly InputAction m_GamePlay_ZoomMinimap;
+    private readonly InputAction m_GamePlay_Inventory;
+    private readonly InputAction m_GamePlay_PauseAndResume;
     public struct GamePlayActions
     {
         private @PlayerControl m_Wrapper;
@@ -314,6 +402,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public InputAction @ZoomCamera => m_Wrapper.m_GamePlay_ZoomCamera;
         public InputAction @Sprint => m_Wrapper.m_GamePlay_Sprint;
         public InputAction @Interract => m_Wrapper.m_GamePlay_Interract;
+        public InputAction @ZoomMinimap => m_Wrapper.m_GamePlay_ZoomMinimap;
+        public InputAction @Inventory => m_Wrapper.m_GamePlay_Inventory;
+        public InputAction @PauseAndResume => m_Wrapper.m_GamePlay_PauseAndResume;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -341,6 +432,15 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Interract.started += instance.OnInterract;
             @Interract.performed += instance.OnInterract;
             @Interract.canceled += instance.OnInterract;
+            @ZoomMinimap.started += instance.OnZoomMinimap;
+            @ZoomMinimap.performed += instance.OnZoomMinimap;
+            @ZoomMinimap.canceled += instance.OnZoomMinimap;
+            @Inventory.started += instance.OnInventory;
+            @Inventory.performed += instance.OnInventory;
+            @Inventory.canceled += instance.OnInventory;
+            @PauseAndResume.started += instance.OnPauseAndResume;
+            @PauseAndResume.performed += instance.OnPauseAndResume;
+            @PauseAndResume.canceled += instance.OnPauseAndResume;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -363,6 +463,15 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Interract.started -= instance.OnInterract;
             @Interract.performed -= instance.OnInterract;
             @Interract.canceled -= instance.OnInterract;
+            @ZoomMinimap.started -= instance.OnZoomMinimap;
+            @ZoomMinimap.performed -= instance.OnZoomMinimap;
+            @ZoomMinimap.canceled -= instance.OnZoomMinimap;
+            @Inventory.started -= instance.OnInventory;
+            @Inventory.performed -= instance.OnInventory;
+            @Inventory.canceled -= instance.OnInventory;
+            @PauseAndResume.started -= instance.OnPauseAndResume;
+            @PauseAndResume.performed -= instance.OnPauseAndResume;
+            @PauseAndResume.canceled -= instance.OnPauseAndResume;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -434,6 +543,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         void OnZoomCamera(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnInterract(InputAction.CallbackContext context);
+        void OnZoomMinimap(InputAction.CallbackContext context);
+        void OnInventory(InputAction.CallbackContext context);
+        void OnPauseAndResume(InputAction.CallbackContext context);
     }
     public interface IDialogueActions
     {

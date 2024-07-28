@@ -1,0 +1,84 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/USS/InGame.uss?fileID=7433441132597879392&amp;guid=336d9610d7dbcca4abb1117f1c50c74a&amp;type=3#InGame" />
+    <ui:VisualElement name="dialogue" style="justify-content: flex-end; align-items: center; width: 100%; height: 100%; display: none; position: absolute; top: 1px; left: 1px;">
+        <ui:VisualElement name="container_dialogue" style="height: 30%; width: 75%; background-image: url(&apos;project://database/Assets/UI%20Toolkit/Textures/bg_chat.png?fileID=2800000&amp;guid=f972ed86300e90e4ebb11df06ecd0d4c&amp;type=3#bg_chat&apos;); padding-left: 30px; padding-right: 30px; padding-top: 30px; padding-bottom: 10px;">
+            <ui:VisualElement name="name_character" style="margin-bottom: 9px;">
+                <ui:Label text="name character" display-tooltip-when-elided="true" enable-rich-text="false" style="color: rgb(255, 0, 0); font-size: 35px; -unity-font-style: bold; margin-bottom: 16px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="dialogue" style="width: 100%; height: 100%; justify-content: space-around;">
+                <ui:Label text="Text" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0); font-size: 25%; height: 100%; width: 100%; -unity-text-align: middle-left; white-space: normal; left: 30px; padding-right: 40px; justify-content: space-around;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="skip" style="align-items: flex-end; height: 60px;">
+                <ui:VisualElement name="skip_image" style="background-image: url(&apos;project://database/Assets/UI%20Toolkit/Textures/skip.png?fileID=2800000&amp;guid=ecd6b559dc8477e46a799fc7fcb2a325&amp;type=3#skip&apos;); height: 60px; width: 300px; top: auto;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="inventory" style="flex-direction: row-reverse; position: absolute; left: 1788px; top: 282px;">
+        <ui:VisualElement name="container_inventory" style="width: 420px; height: 556px; position: absolute; top: auto; left: auto; right: auto; flex-direction: column; align-items: stretch; justify-content: flex-start; background-color: rgba(255, 81, 81, 0.81);">
+            <ui:VisualElement name="slot_inventory" class="inventory-slot-container" style="width: 100%; height: 100%; max-width: 100%; max-height: 100%; min-width: 100%; min-height: 100%; flex-direction: row; flex-wrap: wrap;">
+                <ui:VisualElement class="inventory-slotContainer" style="display: none; visibility: hidden; overflow: hidden;">
+                    <ui:VisualElement class="inventory-slotIcon" style="background-image: url(&apos;project://database/Assets/Materials/Sprite/Inventory/Item/syndicate.png?fileID=2800000&amp;guid=515d219f1a2df0449968a34d210a81bd&amp;type=3#syndicate&apos;); width: 128px; height: 128px;" />
+                    <ui:VisualElement class="inventory-slotItemCount">
+                        <ui:Label text="Label" display-tooltip-when-elided="true" class="inventory-slotItemCountText" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="minimap" style="background-color: rgba(241, 174, 174, 0); border-top-left-radius: 100%; border-bottom-left-radius: 100%; border-top-right-radius: 100%; border-bottom-right-radius: 100%; width: 300px; height: 300px; align-items: center; justify-content: center; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 10px; border-right-width: 10px; border-top-width: 10px; border-bottom-width: 10px; overflow: hidden; visibility: visible; position: absolute;">
+        <ui:VisualElement name="map_image" style="width: 300px; height: 300px; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; background-color: rgba(255, 0, 0, 0); background-image: url(&apos;project://database/Assets/Materials/Render/Map/Minimap.renderTexture?fileID=8400000&amp;guid=f5191fcea45d7aa44b41eaeda5bd9171&amp;type=2#Minimap&apos;); align-items: stretch; -unity-background-scale-mode: scale-and-crop; overflow: hidden; position: absolute; top: -1px; left: -13px;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="ui" style="overflow: visible; position: absolute; width: 900px; height: 200px;">
+        <ui:VisualElement name="interract" style="position: absolute; width: 500px; height: 64px; left: 352px; top: 60px; flex-direction: row; display: flex;">
+            <ui:VisualElement name="interract_image" class="interract-image" style="background-image: url(&apos;project://database/Assets/Materials/Icon/UI/interract.png?fileID=21300000&amp;guid=d48ad11de93eb474e995fe638a541848&amp;type=3#interract&apos;); width: 64px; height: 64px; position: relative;" />
+            <ui:Label text="#ui_interact" display-tooltip-when-elided="true" class="ui-interract-text" style="position: relative; height: auto; width: 448px; font-size: 54px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="pause_menu" class="pauseMenu-Container" style="width: 100%; height: 100%; display: flex;">
+        <ui:VisualElement name="menu" class="pauseMenu-menuContainer" style="height: 315px; display: none;">
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="button_resume" class="pauseMenu-buttonMenu" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="button_setting" class="pauseMenu-buttonMenu" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="button_exit" class="pauseMenu-buttonMenu" />
+        </ui:VisualElement>
+        <ui:VisualElement name="setting" style="height: 1080px; justify-content: center; background-color: rgba(0, 0, 0, 0); display: flex; width: 1920px; align-items: center; visibility: visible;">
+            <ui:Label text="#setting_title" display-tooltip-when-elided="true" name="text_setting" style="font-size: 50px; -unity-text-align: upper-center; align-items: center; margin-top: 0; margin-bottom: 0; top: auto; bottom: 100px;" />
+            <ui:VisualElement name="language" class="setting" style="justify-content: space-between; width: 800px;">
+                <ui:Label text="#setting_lanuage" display-tooltip-when-elided="true" name="label_language" class="text_setting" style="align-items: flex-start;" />
+                <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" name="dropdown_language" class="choice" style="justify-content: flex-end; color: rgb(255, 255, 255);" />
+            </ui:VisualElement>
+            <ui:VisualElement name="resolution" class="setting" style="width: 800px; justify-content: space-between;">
+                <ui:Label text="#setting_resolution" display-tooltip-when-elided="true" class="text_setting" style="align-items: flex-start;" />
+                <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" name="dropdown_resolution" class="choice" />
+            </ui:VisualElement>
+            <ui:VisualElement name="full_screen" style="flex-direction: row; height: 40px; width: 784px; align-items: center; justify-content: flex-end; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; overflow: visible; visibility: visible; position: relative; flex-grow: 0;">
+                <ui:Label text="#setting_full_screen" display-tooltip-when-elided="true" name="label_full_screen" style="left: 0; font-size: 20px; justify-content: flex-start; align-items: flex-start; -unity-text-align: middle-center; width: 143px; flex-direction: column; padding-left: 0; padding-right: 0;" />
+                <ui:Toggle name="toggle_full_screen" value="false" style="left: 0; width: 30px; height: 30px; justify-content: center; align-items: center; scale: 2 2;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="quality_graphic" class="setting" style="justify-content: space-between; width: 800px;">
+                <ui:Label text="#setting_quality" display-tooltip-when-elided="true" name="label_quaility_graphic" class="text_setting" style="font-size: 12px; -unity-text-align: upper-left; padding-left: 1px; padding-right: 2px; padding-top: 0; padding-bottom: 0;" />
+                <ui:DropdownField index="-1" choices="System.Collections.Generic.List`1[System.String]" name="dropdown_quaility_graphic" class="choice" />
+            </ui:VisualElement>
+            <ui:VisualElement name="sound_container" style="top: auto;">
+                <ui:VisualElement name="master_container" style="flex-direction: row; width: 800px; justify-content: space-between;">
+                    <ui:Label text="#setting_master_sound" display-tooltip-when-elided="true" name="label_master" class="text_setting" />
+                    <ui:Slider picking-mode="Ignore" value="42" high-value="1" name="slider_master" style="height: 50px; width: 300px; align-items: center; left: auto;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="music_container" style="flex-direction: row; width: 800px; justify-content: space-between;">
+                    <ui:Label text="#setting_music_sound" display-tooltip-when-elided="true" name="label_music" class="text_setting" />
+                    <ui:Slider picking-mode="Ignore" value="42" high-value="1" name="slider_music" style="width: 300px; height: 50px; align-items: center; left: auto;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="sfx_container" style="flex-direction: row; width: 800px; justify-content: space-between;">
+                    <ui:Label text="#setting_sfx_sound" display-tooltip-when-elided="true" name="label_sfx" class="text_setting" />
+                    <ui:Slider picking-mode="Ignore" value="42" high-value="1" name="slider_sfx" style="width: 300px; height: 50px; left: auto; align-items: center;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="setting_button_container" style="align-items: center; flex-direction: row; top: auto; width: 795px; justify-content: center;">
+                <ui:Button display-tooltip-when-elided="true" name="button_apply" text="#apply" class="pauseMenu-buttonSetting" style="right: 0; background-image: none; background-color: rgb(255, 255, 255); border-left-color: rgba(255, 255, 255, 0); border-right-color: rgba(255, 255, 255, 0); border-top-color: rgba(255, 255, 255, 0); border-bottom-color: rgba(255, 255, 255, 0); border-top-left-radius: 30px; border-bottom-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; display: flex; color: rgb(0, 0, 0); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+                <ui:Button display-tooltip-when-elided="true" name="button_back" text="#back" class="pauseMenu-buttonSetting" style="left: 20px; border-top-left-radius: 30px; border-bottom-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; background-image: none; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="load_screen" class="loadScreen-container">
+        <ui:Label text="Loading" display-tooltip-when-elided="true" class="loadScreen-text" />
+    </ui:VisualElement>
+</ui:UXML>

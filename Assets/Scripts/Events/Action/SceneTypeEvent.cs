@@ -6,5 +6,13 @@ public class SceneTypeEvent : ScriptableObject
 {
     public UnityAction<SceneType> OnEventRaised;
 
-    public void RaiseEvent(SceneType data) => OnEventRaised?.Invoke(data);
+    //public void RaiseEvent(SceneType data) => OnEventRaised?.Invoke(data);
+    public void RaiseEvent(SceneType data)
+    {
+        OnEventRaised?.Invoke(data);
+        if (OnEventRaised != null)
+        {
+            Debug.Log("Secne Event NULL");
+        }
+    }    
 }

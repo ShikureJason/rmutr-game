@@ -13,9 +13,7 @@ public class ItemSO : BaseScriptableObject
     [SerializeField] private LocalizedString _itemName = default;
     [SerializeField] private int _maxStack = default;
     [SerializeField] private LocalizedString _description = default;
-    private Guid guid = Guid.NewGuid();
 
-    public Guid GUID => guid;
     public int Id => _id;
     public AssetReference Prefap => _prefap;
     public Sprite Icon => _icon;

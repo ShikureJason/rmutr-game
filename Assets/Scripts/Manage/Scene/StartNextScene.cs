@@ -8,18 +8,20 @@ public class StartNextScene : MonoBehaviour
     [SerializeField] private SceneEvent _loadSceneEventEmitter;
 
     [Header("Event Listener")]
-    [SerializeField] private VoidEvent _startNextSceneEmitter;
+    [SerializeField] private VoidEvent _startNextSceneListener;
 
     private void OnEnable()
     {
-        _startNextSceneEmitter.OnEventRaised += LoadSceneEvent;
+        _startNextSceneListener.OnEventRaised += LoadSceneEvent;
     }
     private void OnDisable()
     {
-        _startNextSceneEmitter.OnEventRaised -= LoadSceneEvent;
+        _startNextSceneListener.OnEventRaised -= LoadSceneEvent;
     }
     private void LoadSceneEvent()
     {
+        Debug.Log("Next");
+        GameData.Instance.CurrentSave.CurrentScene = _startNextScene;
         _loadSceneEventEmitter.RaiseEvent(_startNextScene);
     }
 }

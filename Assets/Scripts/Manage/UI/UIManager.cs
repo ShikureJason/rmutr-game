@@ -15,20 +15,20 @@ public class UIManager : MonoBehaviour
     [SerializeField] private BoolEvent _dialogueEventListener = default;
     [SerializeField] private BoolEvent _loadingScreenEventListener = default;
     [SerializeField] private InteractEvent _interacteventListener = default;
+    [SerializeField] private VoidEvent _initailizeManageEventListener = default;
 
 
     private void OnEnable()
     {
-
         _loadingScreenEventListener.OnEventRaised += loadingScreenActive;
-        _interacteventListener.OnEventRaised += interact;
+        //_interacteventListener.OnEventRaised += interact;
         _dialogueEventListener.OnEventRaised += dialogue;
     }
 
     private void OnDisable()
     {
         _loadingScreenEventListener.OnEventRaised -= loadingScreenActive;
-        _interacteventListener.OnEventRaised -= interact;
+        //_interacteventListener.OnEventRaised -= interact;
         _dialogueEventListener.OnEventRaised -= dialogue;
     }
 
@@ -39,8 +39,8 @@ public class UIManager : MonoBehaviour
     }
 
 
-
     private void loadingScreenActive(bool expression) => _loadingScreen.SetActive(expression);
 
     private void dialogue(bool expression) => _uiDialogue.SetActive(expression);
+
 }

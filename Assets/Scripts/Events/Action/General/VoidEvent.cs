@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,5 +7,8 @@ public class VoidEvent : ScriptableObject
 {
     public UnityAction OnEventRaised;
 
-    public void RaiseEvent() => OnEventRaised?.Invoke();
+    public void RaiseEvent()
+    {
+        OnEventRaised.Invoke();
+    }
 }

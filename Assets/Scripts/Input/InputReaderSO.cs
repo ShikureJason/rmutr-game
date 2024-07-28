@@ -13,6 +13,9 @@ public class InputReaderSO : ScriptableObject, PlayerControl.IGamePlayActions, P
     public UnityAction InteractEvent;
     public UnityAction<bool> ControlCamEvent;
     public UnityAction EscapeGameEvent;
+    public UnityAction<float> ZoomMinimapEvent;
+    public UnityAction InventoryEvent;
+    public UnityAction EscapeEvent;
 
     public UnityAction NextDialogueEvent;
 
@@ -60,6 +63,23 @@ public class InputReaderSO : ScriptableObject, PlayerControl.IGamePlayActions, P
     {
         if (context.phase == InputActionPhase.Performed)
             InteractEvent.Invoke();
+    }
+
+    public void OnZoomMinimap(InputAction.CallbackContext context)
+    {
+        ZoomMinimapEvent.Invoke(context.ReadValue<float>());
+    }
+
+    public void OnInventory(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+            InventoryEvent.Invoke();
+    }
+
+    void PlayerControl.IGamePlayActions.OnPauseAndResume(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+            EscapeEvent.Invoke();
     }
 
     //Dialogue Action

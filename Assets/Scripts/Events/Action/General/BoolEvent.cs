@@ -6,5 +6,5 @@ public class BoolEvent : ScriptableObject
 {
     public UnityAction<bool> OnEventRaised;
 
-    public void RaiseEvent(bool expression) => OnEventRaised?.Invoke(expression);
+    public void RaiseEvent(bool expression) => OnEventRaised.Invoke(expression);
 }

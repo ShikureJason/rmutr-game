@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="container" style="height: 100%; width: 100%; flex-direction: row;">
+        <ui:VisualElement name="character-one" style="width: 540px; margin-left: 50px; margin-right: 50px; margin-top: 0; margin-bottom: 0;">
+            <ui:VisualElement name="image-character-one" style="background-image: url(&apos;project://database/Assets/Materials/Sprite/Character/Character_Test.png?fileID=2800000&amp;guid=8825042c38b132640833c088129fe297&amp;type=3#Character_Test&apos;); width: 512px; height: 512px; align-items: center; justify-content: center;" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="button-confirm-character-one" style="align-items: center; justify-content: center;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="character-two" style="width: 540px; margin-left: 50px; margin-right: 50px;">
+            <ui:VisualElement name="image-character-two" style="justify-content: center; align-items: center; background-image: url(&apos;project://database/Assets/Materials/Sprite/Character/Character_Test.png?fileID=2800000&amp;guid=8825042c38b132640833c088129fe297&amp;type=3#Character_Test&apos;); width: 512px; height: 512px;" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="button-confirm-character-two" />
+        </ui:VisualElement>
+        <ui:VisualElement name="character-three" style="width: 540px; margin-left: 50px; margin-right: 50px;">
+            <ui:VisualElement name="image-character-three" style="background-image: url(&apos;project://database/Assets/Materials/Sprite/Character/Character_Test.png?fileID=2800000&amp;guid=8825042c38b132640833c088129fe297&amp;type=3#Character_Test&apos;); width: 512px; height: 512px;" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" name="button-confirm-character-three" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

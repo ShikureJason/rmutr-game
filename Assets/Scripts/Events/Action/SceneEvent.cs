@@ -6,5 +6,5 @@ public class SceneEvent : ScriptableObject
 {
     public UnityAction<SceneSO> OnEventRaised;
 
-    public void RaiseEvent(SceneSO data) => OnEventRaised?.Invoke(data);
+    public void RaiseEvent(SceneSO data) => OnEventRaised.Invoke(data);
 }

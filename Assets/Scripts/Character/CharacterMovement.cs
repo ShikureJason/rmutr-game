@@ -61,6 +61,7 @@ public class CharacterMovement : MonoBehaviour
 
     private void Move(Vector2 diraction)
     {
+        Debug.Log("Move" + diraction);
         this.diraction = diraction;
     }
 

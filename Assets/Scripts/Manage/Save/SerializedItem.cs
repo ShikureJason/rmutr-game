@@ -5,10 +5,10 @@ public class SerializedItem
     public int ItemId;
     public int ItemAmout;
 
-    public SerializedItem(string GUID, int ItemId, int ItemAmout)
+    public SerializedItem(string GUID, ItemStack item)
     {
         this.GUID = GUID;
-        this.ItemId = ItemId;
-        this.ItemAmout = ItemAmout;
+        ItemId = item.Item.Id;
+        ItemAmout = item.Amount;
     }
 }

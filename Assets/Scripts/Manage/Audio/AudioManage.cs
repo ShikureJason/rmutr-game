@@ -12,16 +12,10 @@ public class AudioManage : MonoBehaviour
     [SerializeField] private AudioCueEvent _SFXEventChannel = default;
     [Tooltip("The SoundManager listens to this event, fired by objects in any scene, to play Music")]
     [SerializeField] private AudioCueEvent _musicEventChannel = default;
-    [Tooltip("The SoundManager listens to this event, fired by objects in any scene, to change SFXs volume")]
-    [SerializeField] private FloatEvent _SFXVolumeEventChannel = default;
-    [Tooltip("The SoundManager listens to this event, fired by objects in any scene, to change Music volume")]
-    [SerializeField] private FloatEvent _musicVolumeEventChannel = default;
-    [Tooltip("The SoundManager listens to this event, fired by objects in any scene, to change Master volume")]
-    [SerializeField] private FloatEvent _masterVolumeEventChannel = default;
 
 
     [Header("Audio control")]
-    [SerializeField] private AudioMixer audioMixer = default;
+    [SerializeField] internal AudioMixer AudioMixer = default; 
     [Range(0f, 1f)]
     [SerializeField] private float _masterVolume = 1f;
     [Range(0f, 1f)]
@@ -29,11 +23,21 @@ public class AudioManage : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField] private float _sfxVolume = 1f;
 
+    public static AudioManage Instance;
     private SoundEmitterVault _soundEmitterVault;
     private SoundEmitter _musicSoundEmitter;
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+
         //TODO: Get the initial volume levels from the settings
         _soundEmitterVault = new SoundEmitterVault();
 
@@ -73,7 +77,7 @@ public class AudioManage : MonoBehaviour
     /// This is only used in the Editor, to debug volumes.
     /// It is called when any of the variables is changed, and will directly change the value of the volumes on the AudioMixer.
     /// </summary>
-    void OnValidate()
+    private void OnValidate()
     {
         if (Application.isPlaying)
         {
@@ -82,31 +86,31 @@ public class AudioManage : MonoBehaviour
             SetGroupVolume("SFXVolume", _sfxVolume);
         }
     }
-    void ChangeMasterVolume(float newVolume)
+    private void ChangeMasterVolume(float newVolume)
     {
         _masterVolume = newVolume;
         SetGroupVolume("MasterVolume", _masterVolume);
     }
-    void ChangeMusicVolume(float newVolume)
+    private void ChangeMusicVolume(float newVolume)
     {
         _musicVolume = newVolume;
         SetGroupVolume("MusicVolume", _musicVolume);
     }
-    void ChangeSFXVolume(float newVolume)
+    private void ChangeSFXVolume(float newVolume)
     {
         _sfxVolume = newVolume;
         SetGroupVolume("SFXVolume", _sfxVolume);
     }
-    public void SetGroupVolume(string parameterName, float normalizedVolume)
+    internal void SetGroupVolume(string parameterName, float normalizedVolume)
     {
-        bool volumeSet = audioMixer.SetFloat(parameterName, NormalizedToMixerValue(normalizedVolume));
+        bool volumeSet = AudioMixer.SetFloat(parameterName, NormalizedToMixerValue(normalizedVolume));
         if (!volumeSet)
             Debug.LogError("The AudioMixer parameter was not found");
     }
 
-    public float GetGroupVolume(string parameterName)
+    internal float GetGroupVolume(string parameterName)
     {
-        if (audioMixer.GetFloat(parameterName, out float rawVolume))
+        if (AudioMixer.GetFloat(parameterName, out float rawVolume))
         {
             return MixerValueToNormalized(rawVolume);
         }
@@ -174,9 +178,10 @@ public class AudioManage : MonoBehaviour
     }
 
     /// <summary>
+    ///  
     /// Plays an AudioCue by requesting the appropriate number of SoundEmitters from the pool.
     /// </summary>
-    public AudioCueKey PlayAudioCue(AudioCueSO audioCue, AudioConfigurationSO settings, Vector3 position = default)
+    internal AudioCueKey PlayAudioCue(AudioCueSO audioCue, AudioConfigurationSO settings, Vector3 position = default)
     {
         AudioClip[] clipsToPlay = audioCue.GetClips();
         SoundEmitter[] soundEmitterArray = new SoundEmitter[clipsToPlay.Length];
@@ -196,7 +201,7 @@ public class AudioManage : MonoBehaviour
         return _soundEmitterVault.Add(audioCue, soundEmitterArray);
     }
 
-    public bool FinishAudioCue(AudioCueKey audioCueKey)
+    internal bool FinishAudioCue(AudioCueKey audioCueKey)
     {
         bool isFound = _soundEmitterVault.Get(audioCueKey, out SoundEmitter[] soundEmitters);
 
@@ -216,7 +221,7 @@ public class AudioManage : MonoBehaviour
         return isFound;
     }
 
-    public bool StopAudioCue(AudioCueKey audioCueKey)
+    internal bool StopAudioCue(AudioCueKey audioCueKey)
     {
         bool isFound = _soundEmitterVault.Get(audioCueKey, out SoundEmitter[] soundEmitters);
 

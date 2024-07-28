@@ -6,8 +6,11 @@ public class SceneSO : BaseScriptableObject
 {
     [SerializeField] private AssetReference _scene;
     [SerializeField] private SceneType _sceneType = default;
+    [SerializeField] private AudioCueSO _backgroundMusicTrack;
 
     public AssetReference Scene => _scene;
     public SceneType SceneType => _sceneType;
+
+    public AudioCueSO BackgroundMusicTrack => _backgroundMusicTrack;
 
 }

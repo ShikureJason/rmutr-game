@@ -1,4 +1,4 @@
-.button_main_manu {
+.button_main_menu {
     width: 370px;
     height: 70s;
     margin-top: 30px;
@@ -13,13 +13,13 @@
     border-right-width: 5px;
     border-top-width: 5px;
     border-bottom-width: 5px;
-    border-left-color: rgba(255, 255, 255, 255);
-    border-right-color: rgba(255, 255, 255, 255);
-    border-top-color: rgba(255, 255, 255, 255);
-    border-bottom-color: rgba(255, 255, 255, 255);
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
 }
 
-.button_main_manu:hover {
+.button_main_menu:hover {
     scale: 1.1 1.1;
     transition-duration: 0.1s;
     background-color: rgb(255, 255, 255);
@@ -28,9 +28,14 @@
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     -unity-background-image-tint-color: rgb(255, 0, 0);
-    border-left-color: rgba(255, 0, 0, 255);
-    border-right-color: rgba(255, 0, 0, 255);
-    border-top-color: rgba(255, 0, 0, 255);
-    border-bottom-color: rgba(255, 0, 0, 255);
-    color: rgba(255, 0, 0, 255);
+    border-left-color: rgb(255, 0, 0);
+    border-right-color: rgb(255, 0, 0);
+    border-top-color: rgb(255, 0, 0);
+    border-bottom-color: rgb(255, 0, 0);
+    color: rgb(255, 0, 0);
+}
+
+.unity-text-element {
+    -unity-font-definition: url('project://database/Assets/Fonts/Kanit-Regular%20SDF.asset?fileID=11400000&guid=7951c222b9603a443a2a01d0ad5d063a&type=2#Kanit-Regular SDF');
+    -unity-font: url('project://database/Assets/Fonts/Kanit/Kanit-Regular.ttf?fileID=12800000&guid=144b862ab56716c4abc9c94a5c730053&type=3#Kanit-Regular');
 }
